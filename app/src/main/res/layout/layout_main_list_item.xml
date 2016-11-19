@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/navi_list_bg"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="0dp"
+    app:cardPreventCornerOverlap="true">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_list_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text=""
+            android:textColor="@color/grey800"
+            android:textSize="15sp" />
+        <!--<View-->
+            <!--android:id="@+id/item_divider"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.3dp"-->
+            <!--android:layout_below="@+id/tv_list_content"-->
+            <!--android:background="@color/grey300" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_list_content">
+
+            <TextView
+                android:id="@+id/tv_created_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:text="date"
+                android:textColor="@color/grey500"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_tag_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@+id/tv_created_date"
+                android:text="@string/text_from"
+                android:textColor="@color/grey500"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_content_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_tag_from"
+                android:background="@drawable/text_from_bg"
+                android:text=""
+                android:textColor="@color/grey500"
+                android:textSize="11sp" />
+
+            <ImageView
+                android:id="@+id/iv_main_list_like"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/iv_like_ripple_bg"
+                android:padding="5dp"
+                android:src="@drawable/ic_favorite" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

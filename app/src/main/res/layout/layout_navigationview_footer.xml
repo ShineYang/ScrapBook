@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/ll_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/rv_main_bg"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/btn_setting"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="设置"
+            android:textColor="@color/grey800" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="50dp"
+        android:background="@color/grey300"/>
+
+    <LinearLayout
+        android:id="@+id/ll_quit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/rv_main_bg"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/btn_quit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="退出"
+            android:textColor="@color/grey800" />
+    </LinearLayout>
+</LinearLayout>

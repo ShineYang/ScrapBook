@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#bebebe</color>
+    <color name="colorAccent">#3ad2c1</color>
+    <color name="white">#ffffff</color>
+
+    <color name="red_normal">#ff3f3f</color>
+    <color name="red_pressed">#ff7373</color>
+    <color name="green_normal">#12cc18</color>
+    <color name="green_pressed">#4fcf76</color>
+    <color name="purple_normal">#9932CC</color>
+    <color name="purple_pressed">#9F79EE</color>
+
+    <color name="grey50">#fafafa</color>
+    <color name="grey100">#f5f5f5</color>
+    <color name="grey200">#eeeeee</color>
+    <color name="grey300">#e0e0e0</color>
+    <color name="grey350">#cfcfcf</color>
+    <color name="grey400">#bdbdbd</color>
+    <color name="grey500">#9e9e9e</color>
+    <color name="grey600">#757575</color>
+    <color name="grey700">#616161</color>
+    <color name="grey800">#424242</color>
+    <color name="grey900">#212121</color>
+    <color name="grey1000">#000000</color>
+
+    <color name="teal50">#e0f2f1</color>
+    <color name="teal100">#b2dfdb</color>
+    <color name="teal200">#80cbc4</color>
+    <color name="teal300">#4db6ac</color>
+    <color name="teal400">#26a69a</color>
+    <color name="teal500">#009688</color>
+    <color name="teal600">#00897b</color>
+    <color name="teal700">#00796b</color>
+    <color name="teal800">#00695c</color>
+    <color name="teal900">#004d40</color>
+    <color name="teala100">#a7ffeb</color>
+    <color name="teala200">#64ffda</color>
+    <color name="teala400">#1de9b6</color>
+    <color name="teala700">#00bfa5</color>
+    <color name="teal350">#3ad2c1</color>
+
+    <color name="lightblue50">#e1f5fe</color>
+    <color name="lightblue100">#b3e5fc</color>
+    <color name="lightblue200">#81d4fa</color>
+    <color name="lightblue300">#4fc3f7</color>
+    <color name="lightblue400">#29b6f6</color>
+    <color name="lightblue500">#03a9f4</color>
+    <color name="lightblue600">#039be5</color>
+    <color name="lightblue700">#0288d1</color>
+    <color name="lightblue800">#0277bd</color>
+    <color name="lightblue900">#01579b</color>
+    <color name="lightbluea100">#80d8ff</color>
+    <color name="lightbluea200">#40c4ff</color>
+    <color name="lightbluea400">#00b0ff</color>
+    <color name="lightbluea700">#0091ea</color>
+</resources>

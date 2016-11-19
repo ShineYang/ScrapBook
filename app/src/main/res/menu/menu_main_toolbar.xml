@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.shineyang.scrapbook.activity.MainActivity">
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="90"
+        android:title="搜索"
+        android:icon="@mipmap/ic_action_search"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ScrapBook</string>
+    <string name="text_from">来自</string>
+    <string name="text_no_content">空空如也，快去剪贴吧～</string>
+    <string name="editor_hint_text">内容</string>
+
+</resources>
