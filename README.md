@@ -3,29 +3,41 @@
 
 ### A light clipboard manager app.
 
+## Notice
+ Now the app is under development, so there's many bugs, and can't be used normally.
+ I will release v1.0 when the app could used normally.
 
-#### Unlimited Clips
+## features
+
+#### Unlimited clips
 
  Remember all your clipboard history and offer text editor and text "bigbang".
 
-#### Easy to Manage
+#### Easy to manage
 
  Easy to search and edit. You can also export history into a plain-text file.
 
 
-#### Share your text
+#### Share text
 
  Any clips text are shareable. You can easily share clips to many apps such as Email, SMS/MMS, Twitter, and more.
 
+### Easy sorted
+
+ Sort clip text by application name.
+
+### Notification widget
+
+ Provide notification widget, easy to operate the item.
 
 #### Material Design
 
  Full material design.
 
 - Support Android 5.0 above.
-- Offer sketch desgin file later.
+- Provide sketch desgin file later.
 
-#### Opensource projects
+## Opensource projects
 
  Thanks for these projects.
 
