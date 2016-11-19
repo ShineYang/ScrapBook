@@ -32,7 +32,7 @@
 - recyclerview-animators
 - greenDAO
 - font tool
-- statusbaruitl
+- statusbar utils
 - butterknife
 
 
