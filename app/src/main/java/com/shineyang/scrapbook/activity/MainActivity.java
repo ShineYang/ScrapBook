@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab_add;
     @BindView(R.id.ll_setting)
     LinearLayout btn_setting;
+    @BindView(R.id.ll_quit)
+    LinearLayout btn_quit;
     @BindView(R.id.rl_no_content)
     RelativeLayout rl_no_content;
 
@@ -121,6 +123,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        btn_quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
             }
         });
@@ -291,7 +301,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main_toolbar, menu);
         return true;
     }
-
 
 
     @Override

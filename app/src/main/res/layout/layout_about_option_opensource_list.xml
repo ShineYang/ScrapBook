@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_about_opensource_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_about_opensource_proj_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ButterKnife"
+            android:textColor="@color/grey700"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_about_opensource_proj_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Field and method binding for Android views which uses annotation processing to generate boilerplate code for you."
+            android:textColor="@color/grey500"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/ll_about_opensource_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/grey300" />
+
+</RelativeLayout>
