@@ -36,7 +36,7 @@
 - butterknife
 
 
-### License [![license for ChipsLayoutManager](https://img.shields.io/crates/l/rustc-serialize.svg)](#)
+## License [![license for ChipsLayoutManager](https://img.shields.io/crates/l/rustc-serialize.svg)](#)
 
     Copyright 2016 ShineYang.
 
