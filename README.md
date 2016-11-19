@@ -11,7 +11,7 @@
 
 #### Unlimited clips
 
- Remember all your clipboard history and offer text editor and text "bigbang".
+ Remember all your clipboard history, offer text editor and text "bigbang".
 
 #### Easy to manage
 
