@@ -22,11 +22,11 @@
 
  Any clips text are shareable. You can easily share clips to many apps such as Email, SMS/MMS, Twitter, and more.
 
-### Easy sorted
+#### Easy sorted
 
  Sort clip text by application name.
 
-### Notification widget
+#### Notification widget
 
  Provide notification widget, easy to operate the item.
 
