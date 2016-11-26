@@ -5,6 +5,9 @@
     <string name="text_no_content">空空如也，快去剪贴吧～</string>
     <string name="editor_hint_text">内容</string>
     <string name="about_text">关于</string>
+    <string name="text_open_source">开源库</string>
+    <string name="text_search_tips">输入关键词检索</string>
+    <string name="text_search_view_hint">搜索剪贴内容</string>
 
 
 </resources>

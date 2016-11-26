@@ -67,8 +67,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="v 1.0.1"
+                    android:layout_marginTop="5dp"
+                    android:text="v1.0.1"
                     android:textColor="@color/grey500"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -93,8 +93,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:textSize="13sp"
                     android:background="@drawable/text_about_opensource_bg"
-                    android:text="开源库"
+                    android:text="@string/text_open_source"
                     android:textColor="@color/white" />
 
                 <com.shineyang.scrapbook.view.BetterListView

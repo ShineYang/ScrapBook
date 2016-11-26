@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 
 import com.shineyang.scrapbook.R;
@@ -29,8 +30,19 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
-        toolbar.setTitle(getResources().getString(R.string.about_text));
+        initToolBar();
         initAboutOptionList();
+    }
+
+    public void initToolBar() {
+        toolbar.setTitle(getResources().getString(R.string.about_text));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void initAboutOptionList() {

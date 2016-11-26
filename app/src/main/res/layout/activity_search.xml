@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.shineyang.scrapbook.activity.SearchActivity">
+
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/floating_search_view"
+        style="@style/SearchViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"
+        app:floatingSearch_leftActionMode="showHome"
+        app:floatingSearch_menu="@menu/menu_main_toolbar"
+        app:floatingSearch_searchBarMarginLeft="10dp"
+        app:floatingSearch_searchBarMarginRight="10dp"
+        app:floatingSearch_searchBarMarginTop="10dp"
+        app:floatingSearch_searchHint="@string/text_search_view_hint"
+        app:floatingSearch_showSearchKey="false"
+        app:floatingSearch_suggestionsListAnimDuration="250" />
+
+    <RelativeLayout
+        android:id="@+id/rl_search_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/iv_search_tips"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_search_tips" />
+
+        <TextView
+            android:id="@+id/tv_search_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_search_tips"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_search_tips"
+            android:textColor="@color/grey500"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -11,13 +11,13 @@
 
     <!--toolbar样式-->
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">@color/grey800</item><!--toolbar标题文字颜色-->
-        <item name="actionMenuTextColor">@color/grey800</item> <!--敲定颜色-->
+        <item name="android:textColorPrimary">@color/grey700</item><!--toolbar标题文字颜色-->
+        <item name="actionMenuTextColor">@color/grey700</item> <!--敲定颜色-->
     </style>
     <!-- toolbar返回模式-->
     <style name="ToolbarActionBack" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@color/grey800</item><!--toolbar标题文字颜色-->
-        <item name="actionMenuTextColor">@color/grey800</item> <!--敲定颜色-->
+        <item name="colorControlNormal">@color/grey700</item><!--toolbar标题文字颜色-->
+        <item name="actionMenuTextColor">@color/grey700</item> <!--敲定颜色-->
     </style>
     <!-- toolbar弹出菜单样式 -->
     <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
@@ -26,6 +26,15 @@
     <!-- toolbar标题样式 -->
     <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="SearchViewStyle">
+        <item name="floatingSearch_hintTextColor">@color/grey400</item>
+        <item name="floatingSearch_clearBtnColor">@color/grey700</item>
+        <item name="floatingSearch_viewTextColor">@color/grey700</item>
+        <item name="floatingSearch_leftActionColor">@color/grey700</item>
+        <item name="floatingSearch_menuItemIconColor">@color/grey700</item>
+        <item name="floatingSearch_suggestionRightIconColor">@color/grey700</item>
     </style>
 
 </resources>

@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,7 @@ import com.shineyang.scrapbook.bean.ListBean;
 import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
 import com.shineyang.scrapbook.service.CBWatcherService;
+import com.shineyang.scrapbook.utils.ActivityAnimUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         initNaivigationView();
         initMainList();
         initFloatActionBar();
+        //initSearchView();
         startService();
     }
 
@@ -299,6 +302,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_toolbar, menu);
+
+        final MenuItem item = menu.findItem(R.id.action_search);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                View search_icon = findViewById(R.id.action_search);
+                ActivityAnimUtil.startActivity(MainActivity.this, SearchActivity.class, search_icon.getRootView(), R.color.white);
+                return false;
+            }
+        });
+
         return true;
     }
 

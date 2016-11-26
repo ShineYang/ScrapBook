@@ -35,7 +35,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.AboutActivity"></activity>
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.SearchActivity"></activity>
     </application>
 
 </manifest>
