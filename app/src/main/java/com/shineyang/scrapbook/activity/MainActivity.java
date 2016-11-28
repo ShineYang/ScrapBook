@@ -216,7 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 //添加一条数据附带动画
                 mainContentRVAdapter.addData(0, insertListContent("数据库插入的第" + readListContent().size() + "条", "scrapbook", "2016.11.07"));
                 rv_main_content.scrollToPosition(0);//回滚到头部
-                Toast.makeText(getApplicationContext(), "增加一条数据到数据库", Toast.LENGTH_SHORT).show();
+                ActivityAnimUtil.startActivity(MainActivity.this, EditorActivity.class, view, R.color.white);
+                //Toast.makeText(getApplicationContext(), "增加一条数据到数据库", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -307,8 +308,8 @@ public class MainActivity extends AppCompatActivity {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                View search_icon = findViewById(R.id.action_search);
-                ActivityAnimUtil.startActivity(MainActivity.this, SearchActivity.class, search_icon.getRootView(), R.color.white);
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
                 return false;
             }
         });
