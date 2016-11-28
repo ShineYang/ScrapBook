@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -46,9 +47,13 @@ public class EditorActivity extends AppCompatActivity {
 
     public void getExtraContent() {
         Intent intent = getIntent();
-        content = intent.getStringExtra("list_content");
-        edt_content.setText(content);
-        edt_content.setSelection(content.length());//移动光标到最后
+        if (intent.hasExtra("list_content")) {
+            content = intent.getStringExtra("list_content");
+            edt_content.setText(content);
+            edt_content.setSelection(content.length());//移动光标到最后
+        }else{
+            Log.v("editor","no content");
+        }
 
         //隐藏软键盘
     }

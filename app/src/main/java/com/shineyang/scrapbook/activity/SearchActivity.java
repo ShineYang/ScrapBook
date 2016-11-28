@@ -1,16 +1,24 @@
 package com.shineyang.scrapbook.activity;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.shineyang.scrapbook.R;
+import com.shineyang.scrapbook.adapter.SearchResultListAdapter;
+import com.shineyang.scrapbook.bean.ListBean;
+import com.shineyang.scrapbook.bean.SuggestionListBean;
+import com.shineyang.scrapbook.utils.DBUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +29,9 @@ public class SearchActivity extends AppCompatActivity {
     FloatingSearchView floatingSearchView;
     @BindView(R.id.rl_search_tips)
     RelativeLayout rl_search_tips;
+
+    private SearchResultListAdapter searchResultListAdapter;
+    private static List<SuggestionListBean> querySuggestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,5 +62,49 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //监听文字改变
+        floatingSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, String newQuery) {
+                if (!oldQuery.equals("") && newQuery.equals("")) {
+                    floatingSearchView.clearSuggestions();
+                } else {
+                    //floatingSearchView.showProgress();
+                    List<ListBean> listRes;
+                    listRes = DBUtils.queryItem(newQuery);
+                    querySuggestions = new ArrayList<>();
+                    for (int i = 0; i < listRes.size(); i++) {
+                        SuggestionListBean suggestionListBean = new SuggestionListBean(listRes.get(i).getContent());
+                        querySuggestions.add(suggestionListBean);
+                    }
+                    floatingSearchView.swapSuggestions(querySuggestions);
+                    //floatingSearchView.hideProgress();
+                }
+            }
+        });
+
+        floatingSearchView.setOnBindSuggestionCallback(new SearchSuggestionsAdapter.OnBindSuggestionCallback() {
+            @Override
+            public void onBindSuggestion(View suggestionView, ImageView leftIcon, TextView textView, final SearchSuggestion item, int itemPosition) {
+                suggestionView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(SearchActivity.this, EditorActivity.class);
+                        intent.putExtra("list_content", item.getBody());
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //TO DO
+    }
+
 }
