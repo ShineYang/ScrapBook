@@ -20,7 +20,7 @@
 
 #### Share text
 
- Any clips text are shareable. You can easily share clips to many apps such as Email, SMS/MMS, Twitter, and more.
+ Any clips text is shareable. You can easily share clips to many apps such as Email, SMS/MMS, Twitter, and more.
 
 #### Easy sorted
 
@@ -43,7 +43,7 @@
 
 - recyclerview-animators
 - greenDAO
-- font tool
+- calligraphy
 - statusbar utils
 - butterknife
 
