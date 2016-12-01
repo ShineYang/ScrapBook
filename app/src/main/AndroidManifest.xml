@@ -12,6 +12,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -34,9 +37,17 @@
             android:name=".service.CBWatcherService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".action.WidgetActionBridge"
+            android:exported="false" />
 
         <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.SearchActivity" />
+        <activity
+            android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor"
+            android:theme="@style/FinestWebViewTheme.Light" />
     </application>
 
 </manifest>

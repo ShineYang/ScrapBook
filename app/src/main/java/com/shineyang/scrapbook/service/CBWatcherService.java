@@ -1,5 +1,7 @@
 package com.shineyang.scrapbook.service;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -10,10 +12,14 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.shineyang.scrapbook.R;
+import com.shineyang.scrapbook.adapter.NotificationWidgetAdapter;
 import com.shineyang.scrapbook.bean.AppBean;
 import com.shineyang.scrapbook.bean.ListBean;
 import com.shineyang.scrapbook.greendao.GreenDaoManager;
@@ -21,6 +27,7 @@ import com.shineyang.scrapbook.greendao.gen.AppBeanDao;
 import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
 import com.shineyang.scrapbook.utils.ApplicationUtil;
 import com.shineyang.scrapbook.utils.DateUtils;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 
 /**
@@ -28,6 +35,10 @@ import com.shineyang.scrapbook.utils.DateUtils;
  */
 
 public class CBWatcherService extends Service {
+    private static String BARDI_SEARCH_BASE_URL = "https://www.baidu.com/s?wd=";
+
+    private final static String NOTIFICATION_GROUP = "notification_group";
+
     private Context mContext;
     private NotificationManagerCompat notificationManager;
     private ClipboardManager clipboardManager;
@@ -37,6 +48,7 @@ public class CBWatcherService extends Service {
     private String packageName;
     private String appName;
     private Drawable appIcon;
+    private String clipContent, date;
 
     private ClipboardManager.OnPrimaryClipChangedListener listener = new ClipboardManager.OnPrimaryClipChangedListener() {
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -71,12 +83,17 @@ public class CBWatcherService extends Service {
         Log.v("cbservice", "-------performClipboardCheck");
         if (temporaryStop) return;
         if (!clipboardManager.hasPrimaryClip()) return;
-        String clipContent, date;
         ListBean listBean;
         try {
             //Don't use CharSequence .toString()!
             CharSequence charSequence = clipboardManager.getPrimaryClip().getItemAt(0).getText();
             clipContent = String.valueOf(charSequence);
+
+            //启动搜索关键词*************
+            //initWebView(clipContent);
+
+            showNotificationWidget();
+
         } catch (Error ignored) {
             return;
         }
@@ -91,8 +108,8 @@ public class CBWatcherService extends Service {
 
         //应用名去重
         if (appBeanDao.queryBuilder().where(AppBeanDao.Properties.AppName.eq(appName)).list().size() >= 1) {
-            Log.v("cbservice","-------已添加过该应用标签");
-        }else{
+            Log.v("cbservice", "-------已添加过该应用标签");
+        } else {
             appBeanDao.insert(appBean);
         }
 
@@ -108,6 +125,43 @@ public class CBWatcherService extends Service {
         Log.v("cbservice", "-------packageName:" + packageName + "(" + appName + ")");
         appIcon = ApplicationUtil.getAppIconByPackageName(getApplicationContext(), packageName);
         ApplicationUtil.saveIconToDir(ApplicationUtil.drawableToBitmap(appIcon), appName);
+    }
+
+
+    public void initWebView(String keyWords) {
+        new FinestWebView.Builder(getApplicationContext()).show(BARDI_SEARCH_BASE_URL + keyWords);
+    }
+
+    public void showNotificationWidget() {
+        //RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_view_small);
+        NotificationCompat.Builder preBuildNotification = new NotificationCompat.Builder(this)
+                .setContentTitle(clipContent) //title
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+                //.setColor(getResources().getColor(R.color.grey600))
+                //.setContentIntent(pendingintent)
+                .setOngoing(false)
+                .setAutoCancel(false)
+                .setContentText("下滑展开更多选项")
+                .setGroup(NOTIFICATION_GROUP)
+                .setGroupSummary(true);
+//                .setContent(remoteViews);
+        //remoteViews.setTextViewText(R.id.tv_current_clip_text,clipContent);
+
+        NotificationWidgetAdapter adapter = new NotificationWidgetAdapter(mContext);
+
+        Notification n = preBuildNotification.build();
+
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            n.bigContentView = adapter.build();
+        } else {
+            Toast.makeText(getApplicationContext(), "not support your android version", Toast.LENGTH_SHORT).show();
+        }
+        //n.icon = R.mipmap.ic_launcher;
+
+        notificationManager.notify(0, n);
+
     }
 
     //添加剪贴目标app数据到数据库，做去重处理

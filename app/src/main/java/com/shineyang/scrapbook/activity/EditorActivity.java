@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.shineyang.scrapbook.R;
 
@@ -22,6 +23,8 @@ public class EditorActivity extends AppCompatActivity {
     Toolbar toolbar_editor;
     @BindView(R.id.edt_content)
     EditText edt_content;
+    @BindView(R.id.edit_tool_bar_copy)
+    RelativeLayout edit_tool_bar_copy;
 
     private String content;
 
@@ -31,6 +34,7 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
         ButterKnife.bind(this);
         initToolBar();
+        initEditToolBar();
         getExtraContent();
     }
 
@@ -41,6 +45,16 @@ public class EditorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+    }
+
+    public void initEditToolBar(){
+        edit_tool_bar_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(EditorActivity.this,FloatingWebViewActivity.class);
+//                startActivity(intent);
             }
         });
     }
