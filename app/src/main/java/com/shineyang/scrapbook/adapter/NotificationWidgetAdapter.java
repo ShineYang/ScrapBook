@@ -24,22 +24,24 @@ public class NotificationWidgetAdapter {
     private Context context;
 
 
-    public NotificationWidgetAdapter(Context context) {//, ListBean clipObject
+    public NotificationWidgetAdapter(Context context, String clipedText) {//, ListBean clipObject
         this.context = context;
-        //String currentClip = clipObject.getContent();
-        //clipsList = new ArrayList<>();
-        //clipsList.add(clipObject);
-        expandedView = new RemoteViews(this.context.getPackageName(), R.layout.layout_notification_widget);
 
+        String currentClip = clipedText;//显示在widget的内容
+        clipsList = new ArrayList<>();
+        expandedView = new RemoteViews(this.context.getPackageName(), R.layout.layout_notification_widget);
+        expandedView.setTextViewText(R.id.tv_header_current_clip_text,currentClip);
+        //search intent
         Intent openSearchIntent = new Intent(this.context, WidgetActionBridge.class)
+                .putExtra(Intent.EXTRA_TEXT,currentClip)
                 .putExtra(WidgetActionBridge.ACTION_CODE, WidgetActionBridge.ACTION_SEARCH);
-        PendingIntent pOpenShareIntent = PendingIntent.getService(this.context, UUID.randomUUID().hashCode(),
+        PendingIntent pOpenShareIntent = PendingIntent.getService(this.context,
+                UUID.randomUUID().hashCode(),
                 openSearchIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         expandedView.setOnClickPendingIntent(R.id.rl_widget_search, pOpenShareIntent);
 
-        //expandedView.setTextViewText(R.id.current_clip, MyUtil.stringLengthCut(currentClip));
-        //add pIntent for share
+        //sepatate intent
 //        Intent openShareIntent = new Intent(this.context, ClipObjectActionBridge.class)
 //                .putExtra(Intent.EXTRA_TEXT, currentClip)
 //                .putExtra(ClipObjectActionBridge.ACTION_CODE, ClipObjectActionBridge.ACTION_SHARE);

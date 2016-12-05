@@ -26,6 +26,7 @@ import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.greendao.gen.AppBeanDao;
 import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
 import com.shineyang.scrapbook.utils.ApplicationUtil;
+import com.shineyang.scrapbook.utils.DBUtils;
 import com.shineyang.scrapbook.utils.DateUtils;
 import com.thefinestartist.finestwebview.FinestWebView;
 
@@ -35,8 +36,6 @@ import com.thefinestartist.finestwebview.FinestWebView;
  */
 
 public class CBWatcherService extends Service {
-    private static String BARDI_SEARCH_BASE_URL = "https://www.baidu.com/s?wd=";
-
     private final static String NOTIFICATION_GROUP = "notification_group";
 
     private Context mContext;
@@ -49,6 +48,7 @@ public class CBWatcherService extends Service {
     private String appName;
     private Drawable appIcon;
     private String clipContent, date;
+    private AppBeanDao appBeanDao;
 
     private ClipboardManager.OnPrimaryClipChangedListener listener = new ClipboardManager.OnPrimaryClipChangedListener() {
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -74,7 +74,6 @@ public class CBWatcherService extends Service {
         notificationManager = NotificationManagerCompat.from(this);
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         clipboardManager.addPrimaryClipChangedListener(listener);
-
         super.onCreate();
     }
 
@@ -88,10 +87,6 @@ public class CBWatcherService extends Service {
             //Don't use CharSequence .toString()!
             CharSequence charSequence = clipboardManager.getPrimaryClip().getItemAt(0).getText();
             clipContent = String.valueOf(charSequence);
-
-            //启动搜索关键词*************
-            //initWebView(clipContent);
-
             showNotificationWidget();
 
         } catch (Error ignored) {
@@ -101,20 +96,24 @@ public class CBWatcherService extends Service {
         if (clipContent.equals("null")) return;
 
         getAppInfo();//获取当前app的信息(包名,程序名,图标)
-        date = DateUtils.getCurDateAndTime();//复制时间
-        listBean = new ListBean(clipContent, appName, date);
-        appBean = new AppBean(appName, packageName, Environment.getExternalStorageDirectory() + "/com.shineyang.scrapbook/" + appName + ".png");
-        AppBeanDao appBeanDao = GreenDaoManager.getInstance().getSession().getAppBeanDao();
-
-        //应用名去重
-        if (appBeanDao.queryBuilder().where(AppBeanDao.Properties.AppName.eq(appName)).list().size() >= 1) {
-            Log.v("cbservice", "-------已添加过该应用标签");
+        if (packageName.equals(getPackageName())) {
+            Log.v("cbservice", "-------过滤掉来自本应用的复制动作");
         } else {
-            appBeanDao.insert(appBean);
-        }
+            date = DateUtils.getCurDateAndTime();//复制时间
+            listBean = new ListBean(clipContent, appName, date);
+            appBean = new AppBean(appName, packageName, Environment.getExternalStorageDirectory() + "/com.shineyang.scrapbook/" + appName + ".png");
+            appBeanDao = GreenDaoManager.getInstance().getSession().getAppBeanDao();
 
-        ListBeanDao listBeanDao = GreenDaoManager.getInstance().getSession().getListBeanDao();
-        listBeanDao.insert(listBean);
+            //应用名去重
+            if (appBeanDao.queryBuilder().where(AppBeanDao.Properties.AppName.eq(appName)).list().size() >= 1) {
+                Log.v("cbservice", "-------已添加过该应用标签");
+            } else {
+                appBeanDao.insert(appBean);
+            }
+
+            ListBeanDao listBeanDao = GreenDaoManager.getInstance().getSession().getListBeanDao();
+            listBeanDao.insert(listBean);
+        }
 
     }
 
@@ -128,27 +127,22 @@ public class CBWatcherService extends Service {
     }
 
 
-    public void initWebView(String keyWords) {
-        new FinestWebView.Builder(getApplicationContext()).show(BARDI_SEARCH_BASE_URL + keyWords);
-    }
-
     public void showNotificationWidget() {
-        //RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_view_small);
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_view_small);
         NotificationCompat.Builder preBuildNotification = new NotificationCompat.Builder(this)
                 .setContentTitle(clipContent) //title
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_notification_small)
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-                //.setColor(getResources().getColor(R.color.grey600))
                 //.setContentIntent(pendingintent)
                 .setOngoing(false)
                 .setAutoCancel(false)
                 .setContentText("下滑展开更多选项")
                 .setGroup(NOTIFICATION_GROUP)
                 .setGroupSummary(true);
-//                .setContent(remoteViews);
-        //remoteViews.setTextViewText(R.id.tv_current_clip_text,clipContent);
+        //.setContent(remoteViews);
+        //remoteViews.setTextViewText(R.id.tv_current_clip_text, clipContent);
 
-        NotificationWidgetAdapter adapter = new NotificationWidgetAdapter(mContext);
+        NotificationWidgetAdapter adapter = new NotificationWidgetAdapter(mContext, clipContent);
 
         Notification n = preBuildNotification.build();
 
@@ -161,11 +155,6 @@ public class CBWatcherService extends Service {
         //n.icon = R.mipmap.ic_launcher;
 
         notificationManager.notify(0, n);
-
-    }
-
-    //添加剪贴目标app数据到数据库，做去重处理
-    public void addAppBean() {
 
     }
 

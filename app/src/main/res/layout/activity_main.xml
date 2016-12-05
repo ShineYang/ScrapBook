@@ -34,7 +34,7 @@
                         android:elevation="3dp"
                         android:fitsSystemWindows="true"
                         app:theme="@style/ToolbarTheme"
-                        app:titleTextAppearance="@style/ToolbarTitle" />
+                        app:titleTextAppearance="@style/ToolbarTitle"/>
 
                 </FrameLayout>
 
@@ -72,10 +72,10 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
-        android:layout_width="265dp"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/grey200">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/drawer_view"

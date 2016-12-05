@@ -5,7 +5,6 @@
     android:id="@+id/activity_about"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context="com.shineyang.scrapbook.activity.AboutActivity">
 
     <android.support.v7.widget.Toolbar
@@ -34,6 +33,7 @@
                 android:id="@+id/ll_header_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -93,10 +93,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:textSize="13sp"
                     android:background="@drawable/text_about_opensource_bg"
                     android:text="@string/text_open_source"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
 
                 <com.shineyang.scrapbook.view.BetterListView
                     android:id="@+id/lv_about_opensource"

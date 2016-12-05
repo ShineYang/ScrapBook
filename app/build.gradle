@@ -34,6 +34,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //material-dialogs
+    compile 'com.afollestad.material-dialogs:core:0.9.1.0'
     //finestwebview
     compile 'com.thefinestartist:finestwebview:1.2.7'
     //recyclerview-animators

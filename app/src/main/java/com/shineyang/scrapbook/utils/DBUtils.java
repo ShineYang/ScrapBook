@@ -1,9 +1,13 @@
 package com.shineyang.scrapbook.utils;
 
+import android.util.Log;
+
 import com.shineyang.scrapbook.bean.ListBean;
 import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.greendao.gen.AppBeanDao;
 import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
+
+import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +34,11 @@ public class DBUtils {
         return searchResult;
     }
 
-    public static void readMainListContent() {//读取剪贴列表
-
+    public static List<ListBean> readTop10ListBean() {//读取最新10个剪贴数据
+        List<ListBean> listData = new ArrayList<>();
+        listData = GreenDaoManager.getInstance().getSession().getListBeanDao().queryBuilder()
+                .limit(10).list();
+        return listData;
     }
 
     public static void saveEditedContent() {//保存修改

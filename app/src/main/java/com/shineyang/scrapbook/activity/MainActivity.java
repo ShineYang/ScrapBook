@@ -64,12 +64,10 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     @BindView(R.id.lv_main_content)
     RecyclerView rv_main_content;
+    @BindView(R.id.iv_navi_header_icon)
+    ImageView iv_navi_header_icon;
     @BindView(R.id.fab_add)
     FloatingActionButton fab_add;
-    @BindView(R.id.ll_setting)
-    LinearLayout btn_setting;
-    @BindView(R.id.ll_quit)
-    LinearLayout btn_quit;
     @BindView(R.id.rl_no_content)
     RelativeLayout rl_no_content;
 
@@ -121,23 +119,14 @@ public class MainActivity extends AppCompatActivity {
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar_main, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(mActionBarDrawerToggle);
         initNaviList();
-        btn_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
 
-        btn_quit.setOnClickListener(new View.OnClickListener() {
+        iv_navi_header_icon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {//ABOUT
                 Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 
 
@@ -222,32 +211,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void CreateInform() {
-
-        //点击的意图ACTION是跳转到Intent
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder notifyBuilder;
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        //定义一个PendingIntent，当用户点击通知时，跳转到某个Activity(也可以发送广播等)
-        Intent intent = new Intent(this, MainActivity.class);
-        notifyBuilder = new NotificationCompat.Builder(this)
-            /*设置small icon*/
-                .setSmallIcon(R.mipmap.ic_chrome)
-            /*设置title*/
-                .setContentTitle("通知")
-                .setNumber(1)
-                .setTicker("通知")
-            /*设置详细文本*/
-                .setContentText("Hello world")
-                .setAutoCancel(true).setContentIntent(pendingIntent);
-        manager.notify(100, notifyBuilder.build());
-    }
-
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -304,11 +267,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_toolbar, menu);
 
-        final MenuItem item = menu.findItem(R.id.action_search);
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        final MenuItem item_search = menu.findItem(R.id.action_search);
+        final MenuItem item_setting = menu.findItem(R.id.action_setting);
+
+        item_search.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        item_setting.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return false;
             }
