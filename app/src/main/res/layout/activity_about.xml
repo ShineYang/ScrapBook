@@ -38,20 +38,20 @@
 
                 <ImageView
                     android:id="@+id/iv_app_icon"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
                     android:src="@mipmap/ic_launcher" />
 
-                <TextView
-                    android:id="@+id/tv_about_app_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/app_name"
-                    android:textColor="@color/grey800" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_about_app_name"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:text="@string/app_name"-->
+                    <!--android:textColor="@color/grey800" />-->
 
                 <TextView
                     android:id="@+id/tv_about_app_english_name"
@@ -59,8 +59,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/app_name_english"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/grey800"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_about_version"
@@ -70,7 +71,7 @@
                     android:layout_marginTop="5dp"
                     android:text="v1.0.1"
                     android:textColor="@color/grey500"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <com.shineyang.scrapbook.view.BetterListView
@@ -84,9 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lv_about_option"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/tv_about_opensource"
