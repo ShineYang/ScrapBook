@@ -68,18 +68,20 @@ public class ApplicationUtil {
         return icon;
     }
 
-    public static void saveIconToDir(Bitmap bitmap, String appName) {
+    public static void saveIconToDir(Bitmap bitmap, String packageName) {
+        Log.v("util", "----存取目录"+Environment.getExternalStorageDirectory() + "/com.shineyang.scrapbook");
+
         File appDir = new File(Environment.getExternalStorageDirectory() + "/com.shineyang.scrapbook");
-        if (appDir.exists()) {
-            Log.v("util", "----已存在目录");
-        } else {
-            appDir.mkdir();
+        if (!appDir.exists()) {
             Log.v("util", "----不存在目录，创建");
+            appDir.mkdirs();
+        } else {
+            Log.v("util", "----已存在目录");
         }
-        String fileName = appName + ".png";
-        File file = new File(appDir, fileName);
+        String fileName = packageName + ".png";
         try {
-            //file.createNewFile();
+            File file = new File(appDir, fileName);
+            file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.flush();

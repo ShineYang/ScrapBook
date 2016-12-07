@@ -101,7 +101,7 @@ public class CBWatcherService extends Service {
         } else {
             date = DateUtils.getCurDateAndTime();//复制时间
             listBean = new ListBean(clipContent, appName, date);
-            appBean = new AppBean(appName, packageName, Environment.getExternalStorageDirectory() + "/com.shineyang.scrapbook/" + appName + ".png");
+            appBean = new AppBean(appName, packageName, Environment.getExternalStorageDirectory() + "/com.shineyang.scrapbook/" + packageName + ".png");
             appBeanDao = GreenDaoManager.getInstance().getSession().getAppBeanDao();
 
             //应用名去重
@@ -123,7 +123,7 @@ public class CBWatcherService extends Service {
         appName = ApplicationUtil.getProgramNameByPackageName(getApplicationContext(), packageName);
         Log.v("cbservice", "-------packageName:" + packageName + "(" + appName + ")");
         appIcon = ApplicationUtil.getAppIconByPackageName(getApplicationContext(), packageName);
-        ApplicationUtil.saveIconToDir(ApplicationUtil.drawableToBitmap(appIcon), appName);
+        ApplicationUtil.saveIconToDir(ApplicationUtil.drawableToBitmap(appIcon), packageName);
     }
 
 
