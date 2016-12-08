@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.shineyang.scrapbook.R;
+import com.shineyang.scrapbook.utils.EditTextUtil;
+import com.shineyang.scrapbook.view.EditableToolBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,10 +26,11 @@ public class EditorActivity extends AppCompatActivity {
     Toolbar toolbar_editor;
     @BindView(R.id.edt_content)
     EditText edt_content;
-    @BindView(R.id.edit_tool_bar_copy)
-    RelativeLayout edit_tool_bar_copy;
+    @BindView(R.id.included_edit_tool_bar)
+    EditableToolBar editableToolBar;
 
     private String content;
+    private EditTextUtil editTextUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +38,8 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
         ButterKnife.bind(this);
         initToolBar();
-        initEditToolBar();
         getExtraContent();
+        initEditToolBar();
     }
 
     public void initToolBar() {
@@ -49,12 +53,33 @@ public class EditorActivity extends AppCompatActivity {
         });
     }
 
-    public void initEditToolBar(){
-        edit_tool_bar_copy.setOnClickListener(new View.OnClickListener() {
+    public void initEditToolBar() {
+        editTextUtil = new EditTextUtil(edt_content);
+        editableToolBar.setOnUndoClickListener(new EditableToolBar.OnUndoClickListener() {
             @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(EditorActivity.this,FloatingWebViewActivity.class);
-//                startActivity(intent);
+            public void onUndoClick() {
+                editTextUtil.undo();
+            }
+        });
+
+        editableToolBar.setOnRedoClickListener(new EditableToolBar.OnRedoClickListener() {
+            @Override
+            public void onRedoClick() {
+                editTextUtil.redo();
+            }
+        });
+
+        editableToolBar.setOnSeparateClickListener(new EditableToolBar.OnSeparateClickListener() {
+            @Override
+            public void onSeparateClick() {
+
+            }
+        });
+
+        editableToolBar.setOnCopyClickListener(new EditableToolBar.OnCopyClickListener() {
+            @Override
+            public void onCopyClick() {
+
             }
         });
     }
@@ -65,11 +90,18 @@ public class EditorActivity extends AppCompatActivity {
             content = intent.getStringExtra("list_content");
             edt_content.setText(content);
             edt_content.setSelection(content.length());//移动光标到最后
-        }else{
-            Log.v("editor","no content");
+        } else {
+            Log.v("editor", "no content");
         }
 
         //隐藏软键盘
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //清空操作栈
+        editTextUtil.clearHistory();
     }
 
     @Override

@@ -106,7 +106,7 @@
                 android:paddingBottom="8dp"
                 android:scrollbars="none" />
 
-            <include layout="@layout/layout_navigationview_footer" />
+            <!--<include layout="@layout/layout_navigationview_footer" />-->
         </LinearLayout>
     </android.support.design.widget.NavigationView>
 

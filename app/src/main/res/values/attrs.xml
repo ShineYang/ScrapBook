@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="fontPath" format="string"/>
+
+    <declare-styleable name="EditableToolBar">
+        <attr name="title_background_color" format="reference|integer" />
+        <attr name="left_button_visible" format="boolean" />
+        <attr name="right_button_visible" format="boolean" />
+        <attr name="title_text" format="string" />
+        <attr name="title_text_color" format="color" />
+        <attr name="title_text_drawable" format="reference|integer" />
+        <attr name="right_button_text" format="string" />
+        <attr name="right_button_text_color" format="color" />
+        <attr name="right_button_drawable" format="reference|integer" />
+        <attr name="left_button_text" format="string" />
+        <attr name="left_button_text_color" format="color" />
+        <attr name="left_button_drawable" format="reference|integer" />
+    </declare-styleable>
+
 </resources>
