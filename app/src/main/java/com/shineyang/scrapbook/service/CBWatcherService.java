@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -63,7 +64,9 @@ public class CBWatcherService extends Service {
                 return;
             }
             previousTime = now;
+
             performClipboardCheck();
+
         }
     };
 
@@ -75,6 +78,11 @@ public class CBWatcherService extends Service {
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         clipboardManager.addPrimaryClipChangedListener(listener);
         super.onCreate();
+    }
+
+    public static void startCBService(Context context) {
+        Intent intent = new Intent(context, CBWatcherService.class);
+        context.startService(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -161,8 +169,8 @@ public class CBWatcherService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        ((ClipboardManager) getSystemService(CLIPBOARD_SERVICE)).removePrimaryClipChangedListener(listener);
     }
-
 
     @Nullable
     @Override
