@@ -4,12 +4,13 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * Created by ShineYang on 2016/11/4.
  */
 @Entity
 public class ListBean {
-
     @Id
     private Long id;
     private String content;

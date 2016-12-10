@@ -13,7 +13,6 @@ public class LaunchServiceAtStartup extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             CBWatcherService.startCBService(context);
-
         }
     }
 }

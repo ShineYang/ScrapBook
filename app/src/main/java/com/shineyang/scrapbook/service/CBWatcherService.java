@@ -3,6 +3,7 @@ package com.shineyang.scrapbook.service;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -43,30 +44,24 @@ public class CBWatcherService extends Service {
     private NotificationManagerCompat notificationManager;
     private ClipboardManager clipboardManager;
     protected boolean temporaryStop = false;
-    private long previousTime = 0;
     private AppBean appBean;
     private String packageName;
     private String appName;
     private Drawable appIcon;
-    private String clipContent, date;
+    private String clipContent = "", date;
     private AppBeanDao appBeanDao;
+
+    private static boolean bHasClipChangedListener = false;
 
     private ClipboardManager.OnPrimaryClipChangedListener listener = new ClipboardManager.OnPrimaryClipChangedListener() {
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public void onPrimaryClipChanged() {
-            /**
-             * 此处是防止间隔太短导致复制两次内容
-             * 参考:http://www.jianshu.com/p/ed4637bfeb05
-             */
-            long now = System.currentTimeMillis();
-            if (now - previousTime < 200) {
-                previousTime = now;
-                return;
+            ClipData clipData = clipboardManager.getPrimaryClip();
+            ClipData.Item item = clipData.getItemAt(0);
+            if (clipContent.equals(item.getText())) return;
+            else {
+                performClipboardCheck();
             }
-            previousTime = now;
-
-            performClipboardCheck();
-
         }
     };
 
@@ -76,13 +71,27 @@ public class CBWatcherService extends Service {
         mContext = this;
         notificationManager = NotificationManagerCompat.from(this);
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        clipboardManager.addPrimaryClipChangedListener(listener);
+        RegPrimaryClipChanged();
         super.onCreate();
     }
 
     public static void startCBService(Context context) {
         Intent intent = new Intent(context, CBWatcherService.class);
         context.startService(intent);
+    }
+
+    private void RegPrimaryClipChanged() {
+        if (!bHasClipChangedListener) {
+            clipboardManager.addPrimaryClipChangedListener(listener);
+            bHasClipChangedListener = true;
+        }
+    }
+
+    private void UnRegPrimaryClipChanged() {
+        if (bHasClipChangedListener) {
+            clipboardManager.removePrimaryClipChangedListener(listener);
+            bHasClipChangedListener = false;
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -136,41 +145,34 @@ public class CBWatcherService extends Service {
 
 
     public void showNotificationWidget() {
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification_view_small);
         NotificationCompat.Builder preBuildNotification = new NotificationCompat.Builder(this)
                 .setContentTitle(clipContent) //title
                 .setSmallIcon(R.mipmap.ic_notification_small)
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-                //.setContentIntent(pendingintent)
                 .setOngoing(false)
                 .setAutoCancel(false)
                 .setContentText("下滑展开更多选项")
                 .setGroup(NOTIFICATION_GROUP)
                 .setGroupSummary(true);
-        //.setContent(remoteViews);
-        //remoteViews.setTextViewText(R.id.tv_current_clip_text, clipContent);
 
+        Log.v("clipContent","======="+clipContent);
         NotificationWidgetAdapter adapter = new NotificationWidgetAdapter(mContext, clipContent);
-
         Notification n = preBuildNotification.build();
-
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
             n.bigContentView = adapter.build();
         } else {
             Toast.makeText(getApplicationContext(), "not support your android version", Toast.LENGTH_SHORT).show();
         }
-        //n.icon = R.mipmap.ic_launcher;
-
         notificationManager.notify(0, n);
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((ClipboardManager) getSystemService(CLIPBOARD_SERVICE)).removePrimaryClipChangedListener(listener);
+        UnRegPrimaryClipChanged();
     }
+
 
     @Nullable
     @Override

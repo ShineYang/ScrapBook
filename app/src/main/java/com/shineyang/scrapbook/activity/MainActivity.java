@@ -82,14 +82,9 @@ public class MainActivity extends AppCompatActivity {
         initNaivigationView();
         initMainList();
         initFloatActionBar();
-        //initSearchView();
-        startService();
+        CBWatcherService.startCBService(getApplicationContext());
     }
 
-    public void startService() {//开启后台监听服务
-        Intent intent = new Intent(MainActivity.this, CBWatcherService.class);
-        startService(intent);
-    }
 
     public void initToolBar() {
         toolbar_main.setTitle("全部剪贴");
@@ -155,29 +150,28 @@ public class MainActivity extends AppCompatActivity {
         //recyclerview-animators
         rv_main_content.setItemAnimator(new SlideInLeftAnimator());
 
-        mainContentRVAdapter = new MainContentRVAdapter(this);//setFavoriteIcon(Math.random() > 0.5 ? 1 : 0)
+        mainContentRVAdapter = new MainContentRVAdapter(this);
 
-        //读取数据
-//        if (readListContent().size() == 0) {
-//            Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
-//        } else
         if (readListContent().size() == 0) {
             rl_no_content.setVisibility(View.VISIBLE);
             rv_main_content.setVisibility(View.GONE);
         } else {
             rv_main_content.setVisibility(View.VISIBLE);
             mainContentRVAdapter.readDataFromDB(readListContent());
-            //设置footer
+            //set footer
             View footer = LayoutInflater.from(this).inflate(R.layout.layout_main_list_footer, rv_main_content, false);
             mainContentRVAdapter.setFooterView(footer);
-            rv_main_content.setAdapter(new ScaleInAnimationAdapter(mainContentRVAdapter));
+            rv_main_content.setAdapter(mainContentRVAdapter);
 
             mainContentRVAdapter.setOnItemClickListener(new MainContentRVAdapter.OnRCVItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position, ListBean listBean) {
                     //Toast.makeText(getApplicationContext(), "这是第" + position + "个item view", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                    intent.putExtra("list_content", listBean.getContent());
+                    intent.putExtra("list_id", String.valueOf(listBean.getId()))
+                            .putExtra("list_content", listBean.getContent())
+                            .putExtra("list_from", listBean.getFrom())
+                            .putExtra("list_date", listBean.getDate());
                     startActivity(intent);
                 }
 
@@ -251,10 +245,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.v("onResume", "-------onResume");
-//        if (mainContentRVAdapter != null){
-//            rv_main_content.setAdapter(mainContentRVAdapter);
-//
-//        }
+        mainContentRVAdapter.readDataFromDB(readListContent());
+        rv_main_content.setAdapter(mainContentRVAdapter);
     }
 
     @Override

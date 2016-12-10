@@ -2,17 +2,25 @@ package com.shineyang.scrapbook.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.shineyang.scrapbook.R;
+import com.shineyang.scrapbook.utils.DBUtils;
 import com.shineyang.scrapbook.utils.EditTextUtil;
 import com.shineyang.scrapbook.view.EditableToolBar;
 
@@ -28,9 +36,12 @@ public class EditorActivity extends AppCompatActivity {
     EditText edt_content;
     @BindView(R.id.included_edit_tool_bar)
     EditableToolBar editableToolBar;
+    @BindView(R.id.tv_text_count)
+    TextView tv_text_count;
 
-    private String content;
+    private String id, content, from, date;
     private EditTextUtil editTextUtil;
+    private Boolean isSaved = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,24 @@ public class EditorActivity extends AppCompatActivity {
         initToolBar();
         getExtraContent();
         initEditToolBar();
+        edt_content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                isSaved = false;
+                int number = editable.length();
+                tv_text_count.setText(number + getResources().getString(R.string.text_text));
+            }
+        });
     }
 
     public void initToolBar() {
@@ -48,7 +77,7 @@ public class EditorActivity extends AppCompatActivity {
         toolbar_editor.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                checkIsSaved();
             }
         });
     }
@@ -87,9 +116,14 @@ public class EditorActivity extends AppCompatActivity {
     public void getExtraContent() {
         Intent intent = getIntent();
         if (intent.hasExtra("list_content")) {
+            id = intent.getStringExtra("list_id");
             content = intent.getStringExtra("list_content");
+            from = intent.getStringExtra("list_from");
+            date = intent.getStringExtra("list_date");
+
             edt_content.setText(content);
             edt_content.setSelection(content.length());//移动光标到最后
+            tv_text_count.setText(content.length() + getResources().getString(R.string.text_text));
         } else {
             Log.v("editor", "no content");
         }
@@ -97,10 +131,67 @@ public class EditorActivity extends AppCompatActivity {
         //隐藏软键盘
     }
 
+    public void saveEditedContent() {
+        DBUtils.saveEditedContent(id, edt_content.getText().toString());
+        isSaved = true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_editor, menu);
+
+        final MenuItem item_save = menu.findItem(R.id.action_save);
+
+        item_save.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                saveEditedContent();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_toast_saved), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+    public void checkIsSaved() {
+        if (isSaved) {
+            finish();
+        } else {
+            new MaterialDialog.Builder(this)
+                    .title(getResources().getString(R.string.text_save_dialog_title))
+                    .positiveText(getResources().getString(R.string.text_save_dialog_pos))
+                    .negativeText(getResources().getString(R.string.text_save_dialog_neg))
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            saveEditedContent();
+                            finish();
+                        }
+                    })
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            checkIsSaved();
+            return true;
+        } else
+            return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //清空操作栈
+        //文字清空操作栈
         editTextUtil.clearHistory();
     }
 

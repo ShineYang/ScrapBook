@@ -7,6 +7,7 @@ import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.greendao.gen.AppBeanDao;
 import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
 
+import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.ArrayList;
@@ -41,7 +42,15 @@ public class DBUtils {
         return listData;
     }
 
-    public static void saveEditedContent() {//保存修改
+    public static void saveEditedContent(String id, String newContent) {//保存修改
+        ListBeanDao listBeanDao = GreenDaoManager.getInstance().getSession().getListBeanDao();
+        List<ListBean> list = listBeanDao.queryBuilder().where(
+                ListBeanDao.Properties.Id.eq(id)
+        ).build().list();
+        for (ListBean bean : list) {
+            bean.setContent(newContent);
+            listBeanDao.insertOrReplaceInTx(bean);
+        }
 
     }
 

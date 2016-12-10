@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">剪贴簿</string>
-    <string name="app_name_english">ScrapBook</string>
+    <string name="app_name_english">SCRAPBOOK</string>
     <string name="text_from">来自</string>
     <string name="text_no_content">空空如也，快去剪贴吧～</string>
     <string name="editor_hint_text">内容</string>
@@ -8,6 +8,14 @@
     <string name="text_open_source">开源库</string>
     <string name="text_search_tips">输入关键词检索</string>
     <string name="text_search_view_hint">搜索剪贴内容</string>
+    <string name="text_text">字</string>
+    <string name="text_save_dialog_title">是否保存已编辑内容?</string>
+    <string name="text_save_dialog_pos">保存</string>
+    <string name="text_save_dialog_neg">舍弃</string>
+    <string name="text_toast_saved">已保存编辑内容</string>
+
+
+
 
 
 </resources>

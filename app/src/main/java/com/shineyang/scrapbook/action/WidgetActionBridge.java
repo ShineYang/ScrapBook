@@ -3,9 +3,14 @@ package com.shineyang.scrapbook.action;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.shineyang.scrapbook.R;
@@ -31,6 +36,10 @@ public class WidgetActionBridge extends IntentService {
 
     private Intent intent;
     public Handler handler;
+
+    WindowManager.LayoutParams wmParams;
+    WindowManager mWindowManager;
+    RelativeLayout root_layout;
 
     public WidgetActionBridge() {
         super("WidgetActionBridge");
@@ -65,6 +74,7 @@ public class WidgetActionBridge extends IntentService {
             case ACTION_SEPARATE:
                 break;
             case ACTION_TRANSLATE:
+               translateClipedContent();
                 break;
             case ACTION_QR_CODE:
                 break;
@@ -92,7 +102,12 @@ public class WidgetActionBridge extends IntentService {
     }
 
     public void translateClipedContent() {
-
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                createTranslateWindow();
+            }
+        });
     }
 
     public void createQRCode() {
@@ -103,6 +118,24 @@ public class WidgetActionBridge extends IntentService {
         new FinestWebView.Builder(this)
                 .statusBarColorRes(R.color.colorPrimaryDark)
                 .show(BAIDU_SEARCH_BASE_URL + keyWords);
+    }
+
+    private void createTranslateWindow() {
+        wmParams = new WindowManager.LayoutParams();
+        mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        //wmParams.format = PixelFormat.RGBA_8888;
+        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        wmParams.gravity = Gravity.CENTER;
+        wmParams.x = 100;
+        wmParams.y = 100;
+
+        wmParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        root_layout = (RelativeLayout) inflater.inflate(R.layout.layout_widget_translate, null);
+        mWindowManager.addView(root_layout, wmParams);
     }
 
 }
