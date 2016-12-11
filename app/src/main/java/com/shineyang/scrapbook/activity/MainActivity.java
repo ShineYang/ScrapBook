@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,12 +38,14 @@ import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
 import com.shineyang.scrapbook.service.CBWatcherService;
 import com.shineyang.scrapbook.utils.ActivityAnimUtil;
+import com.shineyang.scrapbook.utils.DBUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -148,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         rv_main_content.setHasFixedSize(true);
 
         //recyclerview-animators
-        rv_main_content.setItemAnimator(new SlideInLeftAnimator());
+        //rv_main_content.setItemAnimator(new SlideInLeftAnimator());
 
         mainContentRVAdapter = new MainContentRVAdapter(this);
 
@@ -166,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
             mainContentRVAdapter.setOnItemClickListener(new MainContentRVAdapter.OnRCVItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position, ListBean listBean) {
-                    //Toast.makeText(getApplicationContext(), "这是第" + position + "个item view", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, EditorActivity.class);
                     intent.putExtra("list_id", String.valueOf(listBean.getId()))
                             .putExtra("list_content", listBean.getContent())
@@ -190,11 +192,11 @@ public class MainActivity extends AppCompatActivity {
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //添加一条数据附带动画
-                mainContentRVAdapter.addData(0, insertListContent("数据库插入的第" + readListContent().size() + "条", "scrapbook", "2016.11.07"));
-                rv_main_content.scrollToPosition(0);//回滚到头部
-                ActivityAnimUtil.startActivity(MainActivity.this, EditorActivity.class, view, R.color.white);
-                //Toast.makeText(getApplicationContext(), "增加一条数据到数据库", Toast.LENGTH_SHORT).show();
+                //mainContentRVAdapter.addData(0, insertListContent("数据库插入的第" + readListContent().size() + "条", "scrapbook", "2016.11.07"));
+                //rv_main_content.scrollToPosition(0);//回滚到头部
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                intent.putExtra("addMode", true);
+                ActivityAnimUtil.startActivity(MainActivity.this, intent, view, R.color.white);
             }
         });
     }
@@ -231,20 +233,18 @@ public class MainActivity extends AppCompatActivity {
 
     public List<ListBean> readListContent() {
         listData = new ArrayList<>();
-        listData = GreenDaoManager.getInstance().getSession().getListBeanDao().queryBuilder().list();
-        Log.v("main", "--------" + listData.size());
+        listData = DBUtils.readAllList();
         return listData;
     }
 
     public void readNaviBeanList() {
         appBeanList = new ArrayList<>();
-        appBeanList = GreenDaoManager.getInstance().getSession().getAppBeanDao().queryBuilder().list();
+        appBeanList = DBUtils.readNavigationList();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.v("onResume", "-------onResume");
         mainContentRVAdapter.readDataFromDB(readListContent());
         rv_main_content.setAdapter(mainContentRVAdapter);
     }

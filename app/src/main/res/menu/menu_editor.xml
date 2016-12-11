@@ -6,7 +6,7 @@
         android:id="@+id/action_save"
         android:orderInCategory="100"
         android:title="保存"
-        android:icon="@mipmap/ic_save"
+        android:icon="@mipmap/ic_save_grey"
         app:showAsAction="always" />
 
 </menu>
