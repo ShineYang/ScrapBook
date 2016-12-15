@@ -35,8 +35,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:text="20"
-            android:textColor="@color/grey700"
+            android:text=""
+            android:textColor="@color/grey500"
             android:textSize="14sp" />
     </RelativeLayout>
 </RelativeLayout>

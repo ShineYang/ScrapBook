@@ -119,7 +119,11 @@ public class EditTextUtil {
         if (action.isAdd) {
             //恢复添加
             editable.insert(action.startCursor, action.actionTarget);
-            editText.setSelection(action.startCursor, action.endCursor);
+            if (action.endCursor == action.startCursor) {
+                editText.setSelection(action.startCursor + action.actionTarget.length());
+            } else {
+                editText.setSelection(action.startCursor, action.endCursor);
+            }
         } else {
             //恢复删除
             editable.delete(action.startCursor, action.startCursor + action.actionTarget.length());

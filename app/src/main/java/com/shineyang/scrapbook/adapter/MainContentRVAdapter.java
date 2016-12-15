@@ -138,15 +138,7 @@ public class MainContentRVAdapter extends RecyclerView.Adapter<MainContentRVView
     //获取数据的数量
     @Override
     public int getItemCount() {
-//        if(mHeaderView == null && mFooterView == null){
-//            return mDatas.size();
-//        }else if(mHeaderView == null && mFooterView != null){
-//            return mDatas.size() + 1;
-//        }else if (mHeaderView != null && mFooterView == null){
-//            return mDatas.size() + 1;
-//        }else {
-//            return mDatas.size() + 2;
-//        }
+
         if (mFooterView != null) {
             return listDatas.size() + 1;
         } else {

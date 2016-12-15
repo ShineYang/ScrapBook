@@ -16,16 +16,12 @@ import butterknife.ButterKnife;
 
 public class MainContentRVViewHolder extends RecyclerView.ViewHolder {
 
-    //@BindView(R.id.tv_list_content)
     TextView tv_content;
 
-    //@BindView(R.id.tv_created_date)
     TextView tv_date;
 
-    //@BindView(R.id.tv_content_from)
     TextView tv_from;
 
-    //@BindView(R.id.iv_main_list_like)
     ImageView iv_like;
 
     private View mHeaderView;
@@ -34,7 +30,6 @@ public class MainContentRVViewHolder extends RecyclerView.ViewHolder {
 
     MainContentRVViewHolder(View itemView) {
         super(itemView);
-        //ButterKnife.bind(this, itemView);
 
         tv_content = (TextView) itemView.findViewById(R.id.tv_list_content);
         tv_from = (TextView) itemView.findViewById(R.id.tv_content_from);

@@ -1,14 +1,14 @@
 package com.shineyang.scrapbook.activity;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.shineyang.scrapbook.R;
-import com.shineyang.scrapbook.adapter.AboutOpenSourceListAdapter;
 import com.shineyang.scrapbook.adapter.AboutOptionAdapter;
 import com.shineyang.scrapbook.view.BetterListView;
 
@@ -22,8 +22,10 @@ public class AboutActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.lv_about_option)
     BetterListView lv_about_option;
-    @BindView(R.id.lv_about_opensource)
-    BetterListView lv_opensource;
+    //    @BindView(R.id.lv_about_opensource)
+//    BetterListView lv_opensource;
+    @BindView(R.id.tv_about_me)
+    TextView tv_about_me;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,14 @@ public class AboutActivity extends AppCompatActivity {
         AboutOptionAdapter aboutOptionAdapter = new AboutOptionAdapter(this);
         lv_about_option.setAdapter(aboutOptionAdapter);
 
-        AboutOpenSourceListAdapter aboutOpenSourceListAdapter = new AboutOpenSourceListAdapter(this);
-        lv_opensource.setAdapter(aboutOpenSourceListAdapter);
+        tv_about_me.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //textline
+        tv_about_me.getPaint().setAntiAlias(true);
+        tv_about_me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TO DO
+            }
+        });
     }
 
     @Override

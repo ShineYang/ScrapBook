@@ -32,5 +32,6 @@ public interface SearchSuggestion extends Parcelable{
      * @return the text for this suggestion
      */
     String getBody();
+    String getID();
 
 }

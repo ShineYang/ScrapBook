@@ -19,11 +19,14 @@ import android.widget.TextView;
 
 import com.shineyang.scrapbook.R;
 import com.shineyang.scrapbook.bean.AppBean;
+import com.shineyang.scrapbook.bean.ListBean;
 import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.greendao.gen.AppBeanDao;
 import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
+import com.shineyang.scrapbook.utils.DBUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NaviListAdapter extends BaseAdapter {
@@ -101,7 +104,7 @@ public class NaviListAdapter extends BaseAdapter {
             case TYPE_APP_ITEM:
                 naviListViewHolder.iv_appIcon.setImageBitmap(path2BitMap(beanList.get(position - 2).getAppIocnDir()));
                 naviListViewHolder.tv_appName.setText(beanList.get(position - 2).getAppName());
-                naviListViewHolder.tv_count.setText("暂无");
+                naviListViewHolder.tv_count.setText(DBUtils.readAppCopyedCount(beanList.get(position - 2).getAppName()));
                 break;
         }
 
@@ -112,6 +115,12 @@ public class NaviListAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    public void readListFromDB(List<AppBean> appBeanList) {
+        beanList = new ArrayList<>();
+        Collections.reverse(appBeanList);
+        beanList = appBeanList;
     }
 
     public void setDefSelect(int position) {

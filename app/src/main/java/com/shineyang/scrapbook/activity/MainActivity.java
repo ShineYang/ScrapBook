@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ListBean> listData;
 
-    private List<AppBean> appBeanList;
+    private NaviListAdapter naviListAdapter;
 
     private MainContentRVAdapter mainContentRVAdapter = null;
 
@@ -124,14 +124,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void initNaviList() {
         readNaviBeanList();
-        final NaviListAdapter adapter = new NaviListAdapter(this, appBeanList);
-        adapter.setDefSelect(0);
+        naviListAdapter = new NaviListAdapter(this, readNaviBeanList());
+        naviListAdapter.setDefSelect(0);
         drawer_list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        drawer_list.setAdapter(adapter);
+        drawer_list.setAdapter(naviListAdapter);
         drawer_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                adapter.setDefSelect(i);//刷新选中行
+                naviListAdapter.setDefSelect(i);//刷新选中行
                 drawerLayout.closeDrawers();
             }
         });
@@ -237,9 +237,10 @@ public class MainActivity extends AppCompatActivity {
         return listData;
     }
 
-    public void readNaviBeanList() {
-        appBeanList = new ArrayList<>();
+    public List<AppBean> readNaviBeanList() {
+        List<AppBean> appBeanList;
         appBeanList = DBUtils.readNavigationList();
+        return appBeanList;
     }
 
     @Override
@@ -247,6 +248,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         mainContentRVAdapter.readDataFromDB(readListContent());
         rv_main_content.setAdapter(mainContentRVAdapter);
+
+//        naviListAdapter.readListFromDB(readNaviBeanList());
+//        naviListAdapter.notifyDataSetChanged();
     }
 
     @Override

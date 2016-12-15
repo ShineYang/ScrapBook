@@ -28,6 +28,14 @@ public class DBUtils {
 
     }
 
+    public static String readAppCopyedCount(String appName) {
+        int count;
+        count = GreenDaoManager.getInstance().getSession().getListBeanDao().queryBuilder()
+                .where(ListBeanDao.Properties.From.eq(appName))
+                .build().list().size();
+        return String.valueOf(count);
+    }
+
     public static List<AppBean> readNavigationList() {
         List<AppBean> naviList;
         naviList = GreenDaoManager.getInstance().getSession().getAppBeanDao().queryBuilder().list();

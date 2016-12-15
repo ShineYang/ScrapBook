@@ -30,7 +30,6 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.rl_search_tips)
     RelativeLayout rl_search_tips;
 
-    private SearchResultListAdapter searchResultListAdapter;
     private static List<SuggestionListBean> querySuggestions;
 
     @Override
@@ -39,7 +38,6 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         initSearchView();
-
     }
 
     public void initSearchView() {
@@ -76,7 +74,9 @@ public class SearchActivity extends AppCompatActivity {
                     listRes = DBUtils.queryItem(newQuery);
                     querySuggestions = new ArrayList<>();
                     for (int i = 0; i < listRes.size(); i++) {
-                        SuggestionListBean suggestionListBean = new SuggestionListBean(listRes.get(i).getContent());
+                        SuggestionListBean suggestionListBean = new SuggestionListBean(
+                                String.valueOf(listRes.get(i).getId()),
+                                listRes.get(i).getContent());
                         querySuggestions.add(suggestionListBean);
                     }
                     floatingSearchView.swapSuggestions(querySuggestions);
@@ -92,7 +92,8 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(SearchActivity.this, EditorActivity.class);
-                        intent.putExtra("list_content", item.getBody());
+                        intent.putExtra("list_id", item.getID())
+                                .putExtra("list_content", item.getBody());
                         startActivity(intent);
                     }
                 });
@@ -107,4 +108,9 @@ public class SearchActivity extends AppCompatActivity {
         //TO DO
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        floatingSearchView.clearSuggestions();
+    }
 }

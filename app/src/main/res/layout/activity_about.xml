@@ -18,93 +18,95 @@
         app:theme="@style/ToolbarTheme"
         app:titleTextAppearance="@style/ToolbarTitle" />
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/ll_header_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_about"
-        android:scrollbars="none">
+        android:layout_marginTop="35dp"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/iv_app_icon"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_about_app_name"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="@string/app_name"-->
+        <!--android:textColor="@color/grey800" />-->
+
+        <TextView
+            android:id="@+id/tv_about_app_english_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/app_name_english"
+            android:textColor="@color/grey800"
+            android:textSize="14sp" />
 
-            <LinearLayout
-                android:id="@+id/ll_header_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_about_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:text="v1.0.1"
+            android:textColor="@color/grey500"
+            android:textSize="12sp" />
+    </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/iv_app_icon"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:src="@mipmap/ic_launcher" />
+    <com.shineyang.scrapbook.view.BetterListView
+        android:id="@+id/lv_about_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_header_info"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="35dp"
+        android:divider="@null" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_about_app_name"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center_horizontal"-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:text="@string/app_name"-->
-                    <!--android:textColor="@color/grey800" />-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_about_copyright"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_about_app_english_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/app_name_english"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/grey800"
-                    android:textSize="14sp" />
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_about_me_smile" />
 
-                <TextView
-                    android:id="@+id/tv_about_version"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="v1.0.1"
-                    android:textColor="@color/grey500"
-                    android:textSize="12sp" />
-            </LinearLayout>
+        <TextView
+            android:id="@+id/tv_about_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="3dp"
+            android:text="@string/about_author"
+            android:textColor="@color/grey600"
+            android:textSize="13sp" />
+    </LinearLayout>
 
-            <com.shineyang.scrapbook.view.BetterListView
-                android:id="@+id/lv_about_option"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:divider="@null" />
+    <TextView
+        android:id="@+id/tv_about_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="5dp"
+        android:text="@string/about_copyright"
+        android:textColor="@color/grey600"
+        android:textSize="12sp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lv_about_option"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:id="@+id/tv_about_opensource"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/text_about_opensource_bg"
-                    android:text="@string/text_open_source"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-                <com.shineyang.scrapbook.view.BetterListView
-                    android:id="@+id/lv_about_opensource"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_about_opensource"
-                    android:layout_marginTop="10dp"
-                    android:divider="@null" />
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
 </RelativeLayout>

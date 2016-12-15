@@ -16,8 +16,11 @@ import com.shineyang.scrapbook.R;
 
 public class AboutOptionAdapter extends BaseAdapter {
 
-    private String[] itemText = {"介绍", "反馈", "代码"};
-    private int[] itemIcons = {R.mipmap.ic_about_option_about, R.mipmap.ic_about_option_feedback, R.mipmap.ic_about_option_sourcecode};
+    private String[] itemText = {"介绍", "反馈", "代码", "开源库"};
+    private int[] itemIcons = {R.mipmap.ic_about_option_about,
+            R.mipmap.ic_about_option_feedback,
+            R.mipmap.ic_about_github,
+            R.mipmap.ic_about_option_sourcecode};
     private LayoutInflater inflater;
 
     public AboutOptionAdapter(Context context) {

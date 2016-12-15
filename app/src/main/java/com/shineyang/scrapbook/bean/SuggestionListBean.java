@@ -8,19 +8,27 @@ import android.os.Parcel;
 
 public class SuggestionListBean implements com.arlib.floatingsearchview.suggestions.model.SearchSuggestion {
 
+    private String searchResID;
     private String searchResName;
 
     public SuggestionListBean(Parcel parcel) {
+        this.searchResID = parcel.readString();
         this.searchResName = parcel.readString();
     }
 
-    public SuggestionListBean(String suggestions) {
+    public SuggestionListBean(String id, String suggestions) {
+        this.searchResID = id;
         this.searchResName = suggestions;
     }
 
     @Override
     public String getBody() {
         return searchResName;
+    }
+
+    @Override
+    public String getID() {
+        return searchResID;
     }
 
     @Override
