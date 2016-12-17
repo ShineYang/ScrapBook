@@ -55,7 +55,7 @@ public class MainContentRVAdapter extends RecyclerView.Adapter<MainContentRVView
         notifyItemInserted(getItemCount() - 1);
     }
 
-    public void readDataFromDB(List<ListBean> listBeanList) {
+    public void readListData(List<ListBean> listBeanList) {
         listDatas = new ArrayList<>();
         Collections.reverse(listBeanList);
         listDatas = listBeanList;

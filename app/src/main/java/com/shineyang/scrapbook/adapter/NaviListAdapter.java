@@ -108,11 +108,11 @@ public class NaviListAdapter extends BaseAdapter {
                 break;
         }
 
-        if (defItem == position) {
-            convertView.setBackgroundResource(R.drawable.selector_navi_list);
-        } else {
-            convertView.setBackgroundResource(android.R.color.transparent);
-        }
+//        if (defItem == position) {
+//            convertView.setBackgroundResource(R.drawable.selector_navi_list);
+//        } else {
+//            convertView.setBackgroundResource(android.R.color.transparent);
+//        }
 
         return convertView;
     }
@@ -121,6 +121,12 @@ public class NaviListAdapter extends BaseAdapter {
         beanList = new ArrayList<>();
         Collections.reverse(appBeanList);
         beanList = appBeanList;
+    }
+
+    public String getSelectedAppName(int postion) {
+        String appName;
+        appName = beanList.get(postion - 2).getAppName();
+        return appName;
     }
 
     public void setDefSelect(int position) {

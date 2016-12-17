@@ -21,13 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.jaeger.library.StatusBarUtil;
 import com.shineyang.scrapbook.R;
 import com.shineyang.scrapbook.adapter.MainContentRVAdapter;
@@ -45,9 +45,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
@@ -75,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     private NaviListAdapter naviListAdapter;
 
     private MainContentRVAdapter mainContentRVAdapter = null;
+
+    private MaterialDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,11 +130,29 @@ public class MainActivity extends AppCompatActivity {
         drawer_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                naviListAdapter.setDefSelect(i);//刷新选中行
+                //naviListAdapter.setDefSelect(i);//refresh selected row.
                 drawerLayout.closeDrawers();
+                String appName = naviListAdapter.getSelectedAppName(i);
+                //showProgressDialog();
+                //loadDataByAppName(appName);
+                toolbar_main.setTitle(getResources().getString(R.string.text_toolbar_from) + appName);
             }
         });
     }
+
+    public void loadDataByAppName(final String appName) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<ListBean> newListBeen = DBUtils.getBeanListByAppName(appName);
+                rv_main_content.removeAllViews();
+                mainContentRVAdapter.readListData(newListBeen);
+                rv_main_content.setAdapter(mainContentRVAdapter);
+            }
+        }).start();
+        //dissmissProgressDialog();
+    }
+
 
     public int setFavoriteIcon(int type) {
         if (type == 0) {
@@ -150,9 +167,6 @@ public class MainActivity extends AppCompatActivity {
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         rv_main_content.setHasFixedSize(true);
 
-        //recyclerview-animators
-        //rv_main_content.setItemAnimator(new SlideInLeftAnimator());
-
         mainContentRVAdapter = new MainContentRVAdapter(this);
 
         if (readListContent().size() == 0) {
@@ -160,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             rv_main_content.setVisibility(View.GONE);
         } else {
             rv_main_content.setVisibility(View.VISIBLE);
-            mainContentRVAdapter.readDataFromDB(readListContent());
+            mainContentRVAdapter.readListData(readListContent());
             //set footer
             View footer = LayoutInflater.from(this).inflate(R.layout.layout_main_list_footer, rv_main_content, false);
             mainContentRVAdapter.setFooterView(footer);
@@ -243,14 +257,38 @@ public class MainActivity extends AppCompatActivity {
         return appBeanList;
     }
 
+    public void showProgressDialog() {
+        dialog = new MaterialDialog.Builder(this)
+                .title(R.string.text_progress_dialog)
+                .content(R.string.text_progress_dialog_content)
+                .progress(true, 0)
+                .show();
+    }
+
+    public void dissmissProgressDialog() {
+        dialog.dismiss();
+    }
+
+    public void loadMainContentList() {
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        mainContentRVAdapter.readDataFromDB(readListContent());
+        mainContentRVAdapter.readListData(readListContent());
         rv_main_content.setAdapter(mainContentRVAdapter);
 
 //        naviListAdapter.readListFromDB(readNaviBeanList());
 //        naviListAdapter.notifyDataSetChanged();
+
+        /**
+         * TODO
+         * 在进入分类加载主页列表状态下
+         * 在回退到MainActivity时,不执行加载所有列表，而是刷新当前分类下列表
+         * 需要写方法实现按条件加载内容
+         */
+
     }
 
     @Override

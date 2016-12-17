@@ -20,6 +20,14 @@ import java.util.List;
 
 public class DBUtils {
 
+    private static ListBeanDao getListBeanDao() {
+        return GreenDaoManager.getInstance().getSession().getListBeanDao();
+    }
+
+    private static AppBeanDao getAppBeanDao() {
+        return GreenDaoManager.getInstance().getSession().getAppBeanDao();
+    }
+
     public static void addItem(ListBean newContent) {
         GreenDaoManager.getInstance().getSession().getListBeanDao().insert(newContent);
     }
@@ -28,9 +36,17 @@ public class DBUtils {
 
     }
 
+    public static List<ListBean> getBeanListByAppName(String appName) {
+        List<ListBean> list;
+        list = getListBeanDao().queryBuilder().where(
+                ListBeanDao.Properties.From.eq(appName)
+        ).list();
+        return list;
+    }
+
     public static String readAppCopyedCount(String appName) {
         int count;
-        count = GreenDaoManager.getInstance().getSession().getListBeanDao().queryBuilder()
+        count = getListBeanDao().queryBuilder()
                 .where(ListBeanDao.Properties.From.eq(appName))
                 .build().list().size();
         return String.valueOf(count);
@@ -38,33 +54,33 @@ public class DBUtils {
 
     public static List<AppBean> readNavigationList() {
         List<AppBean> naviList;
-        naviList = GreenDaoManager.getInstance().getSession().getAppBeanDao().queryBuilder().list();
+        naviList = getAppBeanDao().queryBuilder().list();
         return naviList;
     }
 
     public static List<ListBean> readAllList() {
         List<ListBean> allList;
-        allList = GreenDaoManager.getInstance().getSession().getListBeanDao().queryBuilder().list();
+        allList = getListBeanDao().queryBuilder().list();
         return allList;
     }
 
-    public static List<ListBean> queryItem(String searchContent) {//查找剪贴项
+    public static List<ListBean> queryItem(String searchContent) {//search
         List<ListBean> searchResult;
-        searchResult = GreenDaoManager.getInstance().getSession().getListBeanDao().queryBuilder()
+        searchResult = getListBeanDao().queryBuilder()
                 .where(ListBeanDao.Properties.Content.like("%" + searchContent + "%"))
                 .build().list();
         return searchResult;
     }
 
-    public static List<ListBean> readTop10ListBean() {//读取最新10个剪贴数据
+    public static List<ListBean> readTop10ListBean() {
         List<ListBean> listData = new ArrayList<>();
-        listData = GreenDaoManager.getInstance().getSession().getListBeanDao().queryBuilder()
+        listData = getListBeanDao().queryBuilder()
                 .limit(10).list();
         return listData;
     }
 
-    public static void saveEditedContent(String id, String newContent) {//保存修改
-        ListBeanDao listBeanDao = GreenDaoManager.getInstance().getSession().getListBeanDao();
+    public static void saveEditedContent(String id, String newContent) {//save
+        ListBeanDao listBeanDao = getListBeanDao();
         List<ListBean> list = listBeanDao.queryBuilder().where(
                 ListBeanDao.Properties.Id.eq(id)
         ).build().list();

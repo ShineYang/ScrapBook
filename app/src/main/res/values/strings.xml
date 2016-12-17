@@ -15,9 +15,9 @@
     <string name="text_save_dialog_pos">保存</string>
     <string name="text_save_dialog_neg">舍弃</string>
     <string name="text_toast_saved">已保存编辑内容</string>
-
-
-
+    <string name="text_progress_dialog">提示</string>
+    <string name="text_progress_dialog_content">正在加载...</string>
+    <string name="text_toolbar_from">来自&#160;</string>
 
 
 </resources>
