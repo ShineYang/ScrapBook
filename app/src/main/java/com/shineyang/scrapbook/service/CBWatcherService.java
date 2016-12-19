@@ -117,7 +117,7 @@ public class CBWatcherService extends Service {
             Log.v("cbservice", "-------过滤掉来自本应用的复制动作");
         } else {
             date = DateUtils.getCurDateAndTime();//复制时间
-            listBean = new ListBean(clipContent, appName, date);
+            listBean = new ListBean(clipContent, appName, date,"0");
             appBean = new AppBean(appName, packageName, Environment.getExternalStorageDirectory() + "/com.shineyang.scrapbook/" + packageName + ".png");
             appBeanDao = GreenDaoManager.getInstance().getSession().getAppBeanDao();
 

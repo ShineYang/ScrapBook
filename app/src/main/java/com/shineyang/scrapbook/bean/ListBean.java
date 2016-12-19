@@ -17,14 +17,20 @@ public class ListBean {
     private String from;
     private String date;
     private String isCollect;
-    public boolean isSelect = false;
+    private boolean isSelect = false;
+
+    public ListBean(String content, String from, String date,String isCollect) {
+        this.content = content;
+        this.from = from;
+        this.date = date;
+        this.isCollect = isCollect;
+    }
 
     public ListBean(String content, String from, String date) {
         this.content = content;
         this.from = from;
         this.date = date;
     }
-
 
     public ListBean() {
     }

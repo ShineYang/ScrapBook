@@ -7,8 +7,6 @@ package com.shineyang.scrapbook.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +17,7 @@ import android.widget.TextView;
 
 import com.shineyang.scrapbook.R;
 import com.shineyang.scrapbook.bean.AppBean;
-import com.shineyang.scrapbook.bean.ListBean;
 import com.shineyang.scrapbook.greendao.GreenDaoManager;
-import com.shineyang.scrapbook.greendao.gen.AppBeanDao;
-import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
 import com.shineyang.scrapbook.utils.DBUtils;
 
 import java.util.ArrayList;
@@ -30,14 +25,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class NaviListAdapter extends BaseAdapter {
-    private static final int TYPE_FIXED_ITEM = 0;
-    private static final int TYPE_APP_ITEM = 1;
+    public static final int TYPE_FIXED_ITEM = 0;
+    public static final int TYPE_APP_ITEM = 1;
     private Context context;
     private List<AppBean> beanList;
     private int defItem;//声明默认选中的项
     int[] appIcons = {R.mipmap.ic_all_list, R.mipmap.ic_favorite};
     String[] appNames = {"全部剪贴", "收藏"};
-    String[] appItemCount = {"120", "32", "52", "11", "2", "11"};
 
     public NaviListAdapter(Context context, List<AppBean> beanList) {
         this.context = context;
@@ -109,12 +103,28 @@ public class NaviListAdapter extends BaseAdapter {
         }
 
 //        if (defItem == position) {
-//            convertView.setBackgroundResource(R.drawable.selector_navi_list);
+//            naviListViewHolder.tv_appName.setTextColor(convertView.getResources().getColor(R.color.teal500));
+//            //convertView.setBackgroundResource(R.drawable.selector_navi_list);
 //        } else {
-//            convertView.setBackgroundResource(android.R.color.transparent);
+//            naviListViewHolder.tv_appName.setTextColor(convertView.getResources().getColor(R.color.grey600));
+//
+//            //convertView.setBackgroundResource(android.R.color.transparent);
 //        }
 
         return convertView;
+    }
+
+    public int getItemType(int position) {
+        int type = getItemViewType(position);
+        switch (type) {
+            case TYPE_FIXED_ITEM:
+                type = TYPE_FIXED_ITEM;
+                break;
+            case TYPE_APP_ITEM:
+                type = TYPE_APP_ITEM;
+                break;
+        }
+        return type;
     }
 
     public void readListFromDB(List<AppBean> appBeanList) {

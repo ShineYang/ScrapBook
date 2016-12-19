@@ -71,6 +71,10 @@ public class MainContentRVAdapter extends RecyclerView.Adapter<MainContentRVView
 
     }
 
+    public String getIdByPosition(int position) {
+        return String.valueOf(listDatas.get(position).getId());
+    }
+
     //创建新View，被LayoutManager所调用
     @Override
     public MainContentRVViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

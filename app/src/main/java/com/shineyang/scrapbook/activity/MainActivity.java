@@ -132,24 +132,31 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //naviListAdapter.setDefSelect(i);//refresh selected row.
                 drawerLayout.closeDrawers();
-                String appName = naviListAdapter.getSelectedAppName(i);
+                int itemType = naviListAdapter.getItemType(i);
+                switch (itemType) {
+                    case 0:
+                        if (i == 0) {
+                            reLoadMainContentList();
+                        } else
+                            Toast.makeText(getApplicationContext(), "暂无收藏", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        String appName = naviListAdapter.getSelectedAppName(i);
+                        toolbar_main.setTitle(getResources().getString(R.string.text_toolbar_from) + appName);
+                        loadDataByAppName(appName);
+                        break;
+                }
                 //showProgressDialog();
-                //loadDataByAppName(appName);
-                toolbar_main.setTitle(getResources().getString(R.string.text_toolbar_from) + appName);
             }
         });
     }
 
     public void loadDataByAppName(final String appName) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<ListBean> newListBeen = DBUtils.getBeanListByAppName(appName);
-                rv_main_content.removeAllViews();
-                mainContentRVAdapter.readListData(newListBeen);
-                rv_main_content.setAdapter(mainContentRVAdapter);
-            }
-        }).start();
+
+        List<ListBean> newListBeen = DBUtils.getBeanListByAppName(appName);
+        rv_main_content.removeAllViews();
+        mainContentRVAdapter.readListData(newListBeen);
+        rv_main_content.setAdapter(mainContentRVAdapter);
         //dissmissProgressDialog();
     }
 
@@ -193,8 +200,17 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemLikeClick(ImageView iv_favorite, int position) {
-                    iv_favorite.setImageResource(R.drawable.ic_favorite_normal);
-                    Toast.makeText(getApplicationContext(), "这是第" + position + "个star", Toast.LENGTH_SHORT).show();
+                    Boolean isStar;
+                    String id = mainContentRVAdapter.getIdByPosition(position);
+                    isStar = DBUtils.isStaredItem(id);
+                    if (isStar) {
+                        iv_favorite.setImageResource(R.drawable.ic_favorite_normal);
+                        Toast.makeText(getApplicationContext(), "取消收藏", Toast.LENGTH_SHORT).show();
+                    } else {
+                        iv_favorite.setImageResource(R.drawable.ic_favorite);
+                        Toast.makeText(getApplicationContext(), "已收藏", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
         }
@@ -238,13 +254,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public ListBean insertListContent(String content, String date, String from) {
-        ListBeanDao listBeanDao = GreenDaoManager.getInstance().getSession().getListBeanDao();
-        ListBean listBean = new ListBean(content, date, from);
-        listBeanDao.insert(listBean);
-        return listBean;
-    }
-
     public List<ListBean> readListContent() {
         listData = new ArrayList<>();
         listData = DBUtils.readAllList();
@@ -269,26 +278,24 @@ public class MainActivity extends AppCompatActivity {
         dialog.dismiss();
     }
 
-    public void loadMainContentList() {
-
+    public void reLoadMainContentList() {
+        toolbar_main.setTitle(getResources().getString(R.string.text_main_toolbar_all));
+        mainContentRVAdapter.readListData(readListContent());
+        rv_main_content.setAdapter(mainContentRVAdapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mainContentRVAdapter.readListData(readListContent());
-        rv_main_content.setAdapter(mainContentRVAdapter);
-
 //        naviListAdapter.readListFromDB(readNaviBeanList());
 //        naviListAdapter.notifyDataSetChanged();
-
+        reLoadMainContentList();
         /**
          * TODO
          * 在进入分类加载主页列表状态下
          * 在回退到MainActivity时,不执行加载所有列表，而是刷新当前分类下列表
          * 需要写方法实现按条件加载内容
          */
-
     }
 
     @Override

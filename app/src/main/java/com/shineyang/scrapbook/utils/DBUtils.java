@@ -52,6 +52,23 @@ public class DBUtils {
         return String.valueOf(count);
     }
 
+    public static Boolean isStaredItem(String id) {
+        Boolean isStared = false;
+        ListBeanDao listBeanDao = getListBeanDao();
+        List<ListBean> list = listBeanDao.queryBuilder().where(
+                ListBeanDao.Properties.Id.eq(id)
+        ).build().list();
+        for (ListBean bean : list) {
+            if (bean.getIsCollect().equals("0")) {
+                isStared = false;
+            } else
+                isStared = true;
+            listBeanDao.insertOrReplaceInTx(bean);
+        }
+        return isStared;
+    }
+
+
     public static List<AppBean> readNavigationList() {
         List<AppBean> naviList;
         naviList = getAppBeanDao().queryBuilder().list();

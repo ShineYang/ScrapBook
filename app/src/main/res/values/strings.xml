@@ -2,6 +2,7 @@
     <string name="app_name">剪贴簿</string>
     <string name="app_name_english">SCRAPBOOK</string>
     <string name="text_from">来自</string>
+    <string name="text_main_toolbar_all">全部剪贴</string>
     <string name="text_no_content">空空如也，快去剪贴吧～</string>
     <string name="editor_hint_text">内容</string>
     <string name="about_text">关于</string>
