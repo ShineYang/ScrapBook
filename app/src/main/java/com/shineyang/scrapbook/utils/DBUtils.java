@@ -52,20 +52,37 @@ public class DBUtils {
         return String.valueOf(count);
     }
 
-    public static Boolean isStaredItem(String id) {
-        Boolean isStared = false;
+    public static Boolean isfavoriteItem(String id) {
+        Boolean isfavoriteItem = false;
         ListBeanDao listBeanDao = getListBeanDao();
         List<ListBean> list = listBeanDao.queryBuilder().where(
                 ListBeanDao.Properties.Id.eq(id)
         ).build().list();
         for (ListBean bean : list) {
             if (bean.getIsCollect().equals("0")) {
-                isStared = false;
-            } else
-                isStared = true;
+                isfavoriteItem = false;
+            } else {
+                isfavoriteItem = true;
+            }
             listBeanDao.insertOrReplaceInTx(bean);
         }
-        return isStared;
+        return isfavoriteItem;
+    }
+
+    public static void starItem(String id) {
+        ListBeanDao listBeanDao = getListBeanDao();
+        List<ListBean> list = listBeanDao.queryBuilder().where(
+                ListBeanDao.Properties.Id.eq(id)
+        ).build().list();
+
+        for (ListBean bean : list) {
+            if (bean.getIsCollect().equals("0")) {
+                bean.setIsCollect("1");
+            } else {
+                bean.setIsCollect("0");
+            }
+            listBeanDao.insertOrReplaceInTx(bean);
+        }
     }
 
 
@@ -79,6 +96,29 @@ public class DBUtils {
         List<ListBean> allList;
         allList = getListBeanDao().queryBuilder().list();
         return allList;
+    }
+
+    public static List<ListBean> readFavoriteList() {
+        List<ListBean> favoriteList;
+        favoriteList = getListBeanDao().queryBuilder().where(
+                ListBeanDao.Properties.IsCollect.eq("1")
+        ).list();
+        return favoriteList;
+    }
+
+    public static int getAllListCount() {
+        int count;
+        count = getListBeanDao().queryBuilder()
+                .list().size();
+        return count;
+    }
+
+    public static int getFavoriateListCount() {
+        int count;
+        count = getListBeanDao().queryBuilder().where(
+                ListBeanDao.Properties.IsCollect.eq("1")
+        ).list().size();
+        return count;
     }
 
     public static List<ListBean> queryItem(String searchContent) {//search

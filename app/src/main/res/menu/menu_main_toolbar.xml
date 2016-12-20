@@ -4,20 +4,29 @@
     tools:context="com.shineyang.scrapbook.activity.MainActivity">
     <item
         android:id="@+id/action_search"
+        android:icon="@mipmap/ic_action_search"
         android:orderInCategory="90"
         android:title="搜索"
-        android:icon="@mipmap/ic_action_search"
         app:showAsAction="always" />
 
+    <!--<item-->
+        <!--android:id="@+id/action_setting"-->
+        <!--android:icon="@mipmap/ic_setting"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="设置"-->
+        <!--app:showAsAction="always" />-->
+    <!--<item-->
+    <!--android:id="@+id/action_switch"-->
+    <!--android:title="开启服务"-->
+    <!--app:actionLayout="@layout/toolbar_switch"-->
+    <!--app:showAsAction="always" />-->
     <item
         android:id="@+id/action_setting"
-        android:orderInCategory="100"
-        android:title="设置"
-        android:icon="@mipmap/ic_setting"
-        app:showAsAction="always" />
-    <!--<item-->
-        <!--android:id="@+id/action_switch"-->
-        <!--android:title="开启服务"-->
-        <!--app:actionLayout="@layout/toolbar_switch"-->
-        <!--app:showAsAction="always" />-->
+        android:title="@string/text_setting"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_about"
+        android:title="@string/about_text"
+        app:showAsAction="never" />
 </menu>

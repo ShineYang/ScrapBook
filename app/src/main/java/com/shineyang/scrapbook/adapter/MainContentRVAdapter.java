@@ -111,7 +111,11 @@ public class MainContentRVAdapter extends RecyclerView.Adapter<MainContentRVView
         holder.tv_content.setText(listDatas.get(position).getContent());
         holder.tv_date.setText(listDatas.get(position).getDate());
         holder.tv_from.setText(listDatas.get(position).getFrom());
-        holder.iv_like.setImageResource(R.drawable.ic_favorite_normal);
+
+        if (listDatas.get(position).getIsCollect().equals("0")){
+            holder.iv_like.setImageResource(R.drawable.ic_favorite_normal);
+        }else holder.iv_like.setImageResource(R.drawable.ic_favorite);
+
 
         /**
          * ***判断是否设置了监听器***

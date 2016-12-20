@@ -92,7 +92,7 @@ public class NaviListAdapter extends BaseAdapter {
                 } else {
                     naviListViewHolder.iv_appIcon.setImageResource(appIcons[position]);
                     naviListViewHolder.tv_appName.setText(appNames[position]);
-                    naviListViewHolder.tv_count.setText("暂无");
+                    naviListViewHolder.tv_count.setText(String.valueOf(getFavoriateListCount()));
                 }
                 break;
             case TYPE_APP_ITEM:
@@ -146,7 +146,13 @@ public class NaviListAdapter extends BaseAdapter {
 
     private int getAllListCount() {
         int count;
-        count = GreenDaoManager.getInstance().getSession().getListBeanDao().queryBuilder().list().size();
+        count = DBUtils.getAllListCount();
+        return count;
+    }
+
+    private int getFavoriateListCount() {
+        int count;
+        count = DBUtils.getFavoriateListCount();
         return count;
     }
 

@@ -39,7 +39,7 @@ dependencies {
     //finestwebview
     compile 'com.thefinestartist:finestwebview:1.2.7'
     //recyclerview-animators
-    compile 'jp.wasabeef:recyclerview-animators:2.2.4'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.5'
     //greenDAO
     compile 'org.greenrobot:greendao:3.2.0'
     //font tool

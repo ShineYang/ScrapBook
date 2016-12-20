@@ -6,6 +6,7 @@
     <string name="text_no_content">空空如也，快去剪贴吧～</string>
     <string name="editor_hint_text">内容</string>
     <string name="about_text">关于</string>
+    <string name="text_setting">设置</string>
     <string name="about_author">️2016 ShineYang Work</string>
     <string name="about_copyright">All Rights Reserved.</string>
     <string name="text_open_source">开源库</string>
@@ -19,6 +20,7 @@
     <string name="text_progress_dialog">提示</string>
     <string name="text_progress_dialog_content">正在加载...</string>
     <string name="text_toolbar_from">来自&#160;</string>
+    <string name="text_favorite">收藏</string>
 
 
 </resources>

@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +16,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,8 +34,6 @@ import com.shineyang.scrapbook.adapter.MainContentRVAdapter;
 import com.shineyang.scrapbook.adapter.NaviListAdapter;
 import com.shineyang.scrapbook.bean.AppBean;
 import com.shineyang.scrapbook.bean.ListBean;
-import com.shineyang.scrapbook.greendao.GreenDaoManager;
-import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
 import com.shineyang.scrapbook.service.CBWatcherService;
 import com.shineyang.scrapbook.utils.ActivityAnimUtil;
 import com.shineyang.scrapbook.utils.DBUtils;
@@ -75,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
     private MaterialDialog dialog;
 
+    private int itemType;
+    private static int drawerItemPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void initToolBar() {
-        toolbar_main.setTitle("全部剪贴");
+        toolbar_main.setTitle(getResources().getString(R.string.text_main_toolbar_all));
         setSupportActionBar(toolbar_main);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
@@ -106,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initNaivigationView() {
-
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar_main, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(mActionBarDrawerToggle);
         initNaviList();
@@ -132,40 +132,53 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //naviListAdapter.setDefSelect(i);//refresh selected row.
                 drawerLayout.closeDrawers();
-                int itemType = naviListAdapter.getItemType(i);
-                switch (itemType) {
-                    case 0:
-                        if (i == 0) {
-                            reLoadMainContentList();
-                        } else
-                            Toast.makeText(getApplicationContext(), "暂无收藏", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        String appName = naviListAdapter.getSelectedAppName(i);
-                        toolbar_main.setTitle(getResources().getString(R.string.text_toolbar_from) + appName);
-                        loadDataByAppName(appName);
-                        break;
-                }
-                //showProgressDialog();
+                drawerItemPosition = i;
+                itemType = naviListAdapter.getItemType(i);
+                loadContentByCategory(i);
             }
         });
     }
 
-    public void loadDataByAppName(final String appName) {
+    public void loadContentByCategory(int itemPosition) {
+        switch (itemType) {
+            case 0:
+                if (itemPosition == 0) {
+                    toolbar_main.setTitle(getResources().getString(R.string.text_main_toolbar_all));
+                    reLoadMainContentList();
+                } else {
+                    setToolBarTitle(getResources().getString(R.string.text_favorite));
+                    loadFavoriate();
+                }
+                break;
+            case 1:
+                String appName = naviListAdapter.getSelectedAppName(itemPosition);
+                setToolBarTitle(appName);
+                loadDataByAppName(appName);
+                break;
+        }
+    }
 
+    public void setToolBarTitle(String title) {
+        toolbar_main.setTitle(getResources().getString(R.string.text_toolbar_from) + title);
+    }
+
+    public void loadDataByAppName(final String appName) {
         List<ListBean> newListBeen = DBUtils.getBeanListByAppName(appName);
         rv_main_content.removeAllViews();
         mainContentRVAdapter.readListData(newListBeen);
         rv_main_content.setAdapter(mainContentRVAdapter);
-        //dissmissProgressDialog();
     }
 
-
-    public int setFavoriteIcon(int type) {
-        if (type == 0) {
-            return R.drawable.ic_favorite_normal;
+    public void loadFavoriate() {
+        List<ListBean> favoriteListBeen;
+        if (DBUtils.readFavoriteList().size() != 0) {
+            favoriteListBeen = DBUtils.readFavoriteList();
+            rv_main_content.removeAllViews();
+            mainContentRVAdapter.readListData(favoriteListBeen);
+            rv_main_content.setAdapter(mainContentRVAdapter);
         } else
-            return R.drawable.ic_favorite;
+            Toast.makeText(getApplicationContext(), "暂无收藏", Toast.LENGTH_SHORT).show();
+
     }
 
     public void initMainList() {
@@ -173,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
         rv_main_content.setLayoutManager(layoutManager);
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         rv_main_content.setHasFixedSize(true);
-
         mainContentRVAdapter = new MainContentRVAdapter(this);
 
         if (readListContent().size() == 0) {
@@ -200,16 +212,19 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemLikeClick(ImageView iv_favorite, int position) {
-                    Boolean isStar;
+                    Boolean isfavorite;
                     String id = mainContentRVAdapter.getIdByPosition(position);
-                    isStar = DBUtils.isStaredItem(id);
-                    if (isStar) {
+                    DBUtils.starItem(id);
+                    isfavorite = DBUtils.isfavoriteItem(id);
+                    if (!isfavorite) {
                         iv_favorite.setImageResource(R.drawable.ic_favorite_normal);
+                        mainContentRVAdapter.notifyItemChanged(position);
                         Toast.makeText(getApplicationContext(), "取消收藏", Toast.LENGTH_SHORT).show();
                     } else {
                         iv_favorite.setImageResource(R.drawable.ic_favorite);
                         Toast.makeText(getApplicationContext(), "已收藏", Toast.LENGTH_SHORT).show();
                     }
+                    reLoadNaviList();
 
                 }
             });
@@ -284,12 +299,17 @@ public class MainActivity extends AppCompatActivity {
         rv_main_content.setAdapter(mainContentRVAdapter);
     }
 
+    public void reLoadNaviList() {
+        naviListAdapter.readListFromDB(readNaviBeanList());
+        naviListAdapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-//        naviListAdapter.readListFromDB(readNaviBeanList());
-//        naviListAdapter.notifyDataSetChanged();
-        reLoadMainContentList();
+        reLoadNaviList();
+        //reLoadMainContentList();
+        loadContentByCategory(drawerItemPosition);
         /**
          * TODO
          * 在进入分类加载主页列表状态下
@@ -304,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
 
         final MenuItem item_search = menu.findItem(R.id.action_search);
         final MenuItem item_setting = menu.findItem(R.id.action_setting);
+        final MenuItem item_about = menu.findItem(R.id.action_about);
 
         item_search.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -315,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         item_setting.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
@@ -323,6 +345,16 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        item_about.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
 
         return true;
     }
