@@ -21,6 +21,38 @@
     <string name="text_progress_dialog_content">正在加载...</string>
     <string name="text_toolbar_from">来自&#160;</string>
     <string name="text_favorite">收藏</string>
+    <string name="text_toolbar_permission">开启权限</string>
+    <string name="title_activity_settings">Settings</string>
 
+    <!-- Strings related to Settings -->
+
+    <string name="pref_text_open_service">开启监听服务</string>
+    <string name="pref_text_open_service_desc">在启动应用后开启后台剪贴板监听服务</string>
+    <string name="pref_text_open_package_usage_stats_switch">允许获取已安装应用列表</string>
+    <string name="pref_text_open_open_package_usage_stats_switch_desc">请保持权限开启, 否则无法按复制来源分类&#160;(必要权限)</string>
+    <string name="pref_text_select_search_engine">搜索引擎</string>
+    <string name="pref_text_select_search_engine_desc">选择搜索引擎</string>
+    <string name="pref_text_open_notification">开启通知</string>
+    <string name="pref_text_open_notification_desc">开启后若后台检测到有复制行为则显示通知</string>
+    <string name="pref_text_open_auto_dismiss_notification">自动消除通知</string>
+    <string name="pref_text_open_auto_dismiss_notification_desc">对通知内容进行操作后消除该通知</string>
+    <string name="pref_text_open_flat_window">开启悬浮窗</string>
+    <string name="pref_text_open_flat_window_desc">在屏幕上显示悬浮操作视图</string>
+    <string name="pref_text_flat_window_transparency">悬浮球透明度</string>
+    <string name="pref_text_flat_window_transparency_desc">设置屏幕悬浮球的透明度</string>
+
+    <string-array name="pref_search_engine_values">
+        <item>Baidu</item>
+        <item>Google</item>
+        <item>Bing</item>
+    </string-array>
+
+    <string-array name="pref_flat_window_transparency_values">
+        <item>20%</item>
+        <item>40%</item>
+        <item>60%</item>
+        <item>80%</item>
+        <item>100%</item>
+    </string-array>
 
 </resources>

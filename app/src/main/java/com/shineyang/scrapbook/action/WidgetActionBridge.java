@@ -3,9 +3,11 @@ package com.shineyang.scrapbook.action;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,7 +33,11 @@ public class WidgetActionBridge extends IntentService {
     public final static int ACTION_SHARE = 5;
     public final static String ACTION_CODE = "0";
 
-    public static String BAIDU_SEARCH_BASE_URL = "https://www.baidu.com/s?wd=";
+    public static String BASE_SEARCH_URL = "";
+    public static String BAIDU_BASE_SEARCH_URL = "https://www.baidu.com/s?wd=";
+    public static String GOOGLE_BASE_SEARCH_URL = "https://www.google.com/#q=";
+    public static String BING_BASE_SEARCH_URL = "https://www.bing.com/search?q=";
+    public final static String PREF_SELECT_SEARCH_ENGINE = "search_engine_list";
 
 
     private Intent intent;
@@ -74,7 +80,7 @@ public class WidgetActionBridge extends IntentService {
             case ACTION_SEPARATE:
                 break;
             case ACTION_TRANSLATE:
-               translateClipedContent();
+                translateClipedContent();
                 break;
             case ACTION_QR_CODE:
                 break;
@@ -115,9 +121,22 @@ public class WidgetActionBridge extends IntentService {
     }
 
     public void searchWithWebView(String keyWords) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String BASE_URL = preferences.getString(PREF_SELECT_SEARCH_ENGINE, "");
+        switch (BASE_URL) {
+            case "Baidu":
+                BASE_SEARCH_URL = BAIDU_BASE_SEARCH_URL;
+                break;
+            case "Google":
+                BASE_SEARCH_URL = GOOGLE_BASE_SEARCH_URL;
+                break;
+            case "Bing":
+                BASE_SEARCH_URL = BING_BASE_SEARCH_URL;
+                break;
+        }
         new FinestWebView.Builder(this)
                 .statusBarColorRes(R.color.colorPrimaryDark)
-                .show(BAIDU_SEARCH_BASE_URL + keyWords);
+                .show(BASE_SEARCH_URL + keyWords);
     }
 
     private void createTranslateWindow() {

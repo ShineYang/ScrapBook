@@ -1,10 +1,13 @@
 package com.shineyang.scrapbook.activity;
 
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +19,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rl_no_content)
     RelativeLayout rl_no_content;
 
+    private Context context;
+
+    public final static String PREF_START_SERVICE = "open_service_switch";
+
     private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     private List<ListBean> listData;
@@ -74,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialDialog dialog;
 
     private int itemType;
+
     private static int drawerItemPosition = 0;
 
     @Override
@@ -81,13 +90,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        context = getApplicationContext();
         initToolBar();
         initNaivigationView();
         initMainList();
         initFloatActionBar();
-        CBWatcherService.startCBService(getApplicationContext());
+        startService();
     }
 
+    public void startService() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (!preferences.getBoolean(PREF_START_SERVICE, true)) {
+            context.stopService(new Intent(context, CBWatcherService.class));
+        } else
+            context.startService(new Intent(context, CBWatcherService.class));
+    }
 
     public void initToolBar() {
         toolbar_main.setTitle(getResources().getString(R.string.text_main_toolbar_all));
@@ -318,11 +335,27 @@ public class MainActivity extends AppCompatActivity {
          */
     }
 
+    private void checkUsagePermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+            int mode;
+            mode = appOps.checkOpNoThrow("android:get_usage_stats", android.os.Process.myUid(), getPackageName());
+            boolean granted = mode == AppOpsManager.MODE_ALLOWED;
+            Log.v("granted", "--------" + String.valueOf(granted));
+            if (!granted) {
+                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivityForResult(intent, 1);
+            }
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main_toolbar, menu);
 
         final MenuItem item_search = menu.findItem(R.id.action_search);
+        final MenuItem item_permission = menu.findItem(R.id.action_open_permission);
         final MenuItem item_setting = menu.findItem(R.id.action_setting);
         final MenuItem item_about = menu.findItem(R.id.action_about);
 
@@ -335,12 +368,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        item_setting.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        item_permission.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        item_setting.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 return false;
             }

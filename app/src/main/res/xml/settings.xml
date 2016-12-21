@@ -1,0 +1,52 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="服务">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="open_service_switch"
+            android:summary="@string/pref_text_open_service_desc"
+            android:title="@string/pref_text_open_service" />
+        <!--<CheckBoxPreference-->
+            <!--android:defaultValue="true"-->
+            <!--android:key="open_package_usage_stats_switch"-->
+            <!--android:summary="@string/pref_text_open_open_package_usage_stats_switch_desc"-->
+            <!--android:title="@string/pref_text_open_package_usage_stats_switch" />-->
+        <ListPreference
+            android:defaultValue="Baidu"
+            android:entries="@array/pref_search_engine_values"
+            android:entryValues="@array/pref_search_engine_values"
+            android:key="search_engine_list"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:summary="@string/pref_text_select_search_engine_desc"
+            android:title="@string/pref_text_select_search_engine" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="通知">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="open_notification_switch"
+            android:summary="@string/pref_text_open_notification_desc"
+            android:title="@string/pref_text_open_notification" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="auto_dismiss_notification_switch"
+            android:summary="@string/pref_text_open_auto_dismiss_notification_desc"
+            android:title="@string/pref_text_open_auto_dismiss_notification" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="悬浮窗">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="open_flat_window_switch"
+            android:summary="@string/pref_text_open_flat_window_desc"
+            android:title="@string/pref_text_open_flat_window" />
+    </PreferenceCategory>
+
+    <ListPreference
+        android:defaultValue="80%"
+        android:entries="@array/pref_flat_window_transparency_values"
+        android:entryValues="@array/pref_flat_window_transparency_values"
+        android:key="flat_window_transparency_list"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:summary="@string/pref_text_flat_window_transparency_desc"
+        android:title="@string/pref_text_flat_window_transparency" />
+</PreferenceScreen>

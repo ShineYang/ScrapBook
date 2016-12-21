@@ -10,16 +10,22 @@
         app:showAsAction="always" />
 
     <!--<item-->
-        <!--android:id="@+id/action_setting"-->
-        <!--android:icon="@mipmap/ic_setting"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:title="设置"-->
-        <!--app:showAsAction="always" />-->
+    <!--android:id="@+id/action_setting"-->
+    <!--android:icon="@mipmap/ic_setting"-->
+    <!--android:orderInCategory="100"-->
+    <!--android:title="设置"-->
+    <!--app:showAsAction="always" />-->
     <!--<item-->
     <!--android:id="@+id/action_switch"-->
     <!--android:title="开启服务"-->
     <!--app:actionLayout="@layout/toolbar_switch"-->
     <!--app:showAsAction="always" />-->
+
+    <item
+        android:id="@+id/action_open_permission"
+        android:title="@string/text_toolbar_permission"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_setting"
         android:title="@string/text_setting"
@@ -29,4 +35,6 @@
         android:id="@+id/action_about"
         android:title="@string/about_text"
         app:showAsAction="never" />
+
+
 </menu>
