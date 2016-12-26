@@ -7,6 +7,10 @@ package com.shineyang.scrapbook;
 import android.app.Application;
 import android.content.Context;
 
+import com.shineyang.pullword_lib.action.CopyAction;
+import com.shineyang.pullword_lib.action.SearchAction;
+import com.shineyang.pullword_lib.action.ShareAction;
+import com.shineyang.pullword_lib.bean.PullWord;
 import com.shineyang.scrapbook.greendao.GreenDaoManager;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -30,6 +34,7 @@ public class App extends Application {
         );
 
         GreenDaoManager.getInstance();
+        setUpPullWordAction();
     }
 
     public static App getInstance() {
@@ -40,5 +45,11 @@ public class App extends Application {
         return mContext;
     }
 
+    public void setUpPullWordAction() {
+
+        PullWord.registerAction(PullWord.ACTION_SEARCH, SearchAction.create());
+        PullWord.registerAction(PullWord.ACTION_COPY, CopyAction.create());
+        PullWord.registerAction(PullWord.ACTION_SHARE, ShareAction.create());
+    }
 
 }

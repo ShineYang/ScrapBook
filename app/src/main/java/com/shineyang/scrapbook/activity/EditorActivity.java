@@ -2,6 +2,7 @@ package com.shineyang.scrapbook.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,9 @@ import com.shineyang.scrapbook.utils.DateUtils;
 import com.shineyang.scrapbook.utils.EditTextUtil;
 import com.shineyang.scrapbook.view.EditableToolBar;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -34,12 +39,18 @@ public class EditorActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar_editor)
     Toolbar toolbar_editor;
+    @BindView(R.id.tv_editor_content_from)
+    TextView tv_editor_content_from;
+    @BindView(R.id.tv_editor_created_date)
+    TextView tv_editor_created_date;
     @BindView(R.id.edt_content)
     EditText edt_content;
     @BindView(R.id.included_edit_tool_bar)
     EditableToolBar editableToolBar;
     @BindView(R.id.tv_text_count)
     TextView tv_text_count;
+    @BindView(R.id.rl_editor_content_info)
+    RelativeLayout rl_editor_content_info;
 
     private String id, content, from, date;
     private EditTextUtil editTextUtil;
@@ -58,12 +69,10 @@ public class EditorActivity extends AppCompatActivity {
         edt_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -106,7 +115,11 @@ public class EditorActivity extends AppCompatActivity {
         editableToolBar.setOnSeparateClickListener(new EditableToolBar.OnSeparateClickListener() {
             @Override
             public void onSeparateClick() {
-
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("pullword://?extra_text=" + URLEncoder.encode(edt_content.getText().toString(), "utf-8"))));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -125,15 +138,21 @@ public class EditorActivity extends AppCompatActivity {
             content = intent.getStringExtra("list_content");
             from = intent.getStringExtra("list_from");
             date = intent.getStringExtra("list_date");
-
-            edt_content.setText(content);
-            edt_content.setSelection(content.length());//移动光标到最后
-            tv_text_count.setText(content.length() + getResources().getString(R.string.text_text));
+            setContentInfo();
         } else if (intent.getBooleanExtra("addMode", true)) {
             isAddMode = true;
+            rl_editor_content_info.setVisibility(View.GONE);
         } else {
             Log.v("editor", "no content");
         }
+    }
+
+    public void setContentInfo() {
+        tv_editor_created_date.setText(date);
+        tv_editor_content_from.setText(from);
+        edt_content.setText(content);
+        edt_content.setSelection(content.length());//移动光标到最后
+        tv_text_count.setText(content.length() + getResources().getString(R.string.text_text));
     }
 
 //    public void changInputKeyBorad() {

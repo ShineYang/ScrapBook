@@ -32,6 +32,75 @@
             android:background="@color/white"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:id="@+id/rl_editor_content_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp">
+
+                <!--<TextView-->
+                <!--android:id="@+id/tv_editor_date"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="16dp"-->
+                <!--android:layout_marginTop="7dp"-->
+                <!--android:layout_marginBottom="7dp"-->
+                <!--android:text="2016.12.25  11.23  来自chrome"-->
+                <!--android:textColor="@color/grey500"-->
+                <!--android:textSize="13sp" />-->
+
+                <ImageView
+                    android:id="@+id/iv_editor_clip_time"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/ic_clip_time" />
+
+                <TextView
+                    android:id="@+id/tv_editor_created_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:layout_toRightOf="@+id/iv_editor_clip_time"
+                    android:text=""
+                    android:textColor="@color/grey500"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_editor_tag_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:layout_toRightOf="@+id/tv_editor_created_date"
+                    android:text="@string/text_from"
+                    android:textColor="@color/grey500"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_editor_content_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_editor_tag_from"
+                    android:background="@drawable/text_from_bg"
+                    android:text=""
+                    android:textColor="@color/grey500"
+                    android:textSize="11sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/grey300" />
+
             <EditText
                 android:id="@+id/edt_content"
                 android:layout_width="match_parent"
@@ -40,7 +109,10 @@
                 android:gravity="top"
                 android:hint="@string/editor_hint_text"
                 android:inputType="textMultiLine|textLongMessage"
-                android:padding="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="10dp"
                 android:scrollHorizontally="false"
                 android:scrollbars="vertical"
                 android:textColor="#333"
@@ -57,8 +129,8 @@
 
     <com.shineyang.scrapbook.view.EditableToolBar
         android:id="@+id/included_edit_tool_bar"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

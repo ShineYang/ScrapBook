@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 import com.shineyang.scrapbook.R;
 import com.thefinestartist.finestwebview.FinestWebView;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 
 /**
  * Created by ShineYang on 2016/11/30.
@@ -27,7 +30,7 @@ import java.lang.reflect.Method;
 public class WidgetActionBridge extends IntentService {
 
     public final static int ACTION_SEARCH = 1;
-    public final static int ACTION_SEPARATE = 2;
+    public final static int ACTION_PULLWORD = 2;
     public final static int ACTION_TRANSLATE = 3;
     public final static int ACTION_QR_CODE = 4;
     public final static int ACTION_SHARE = 5;
@@ -77,7 +80,8 @@ public class WidgetActionBridge extends IntentService {
             case ACTION_SEARCH:
                 searchWithKeyWord(clipedText);
                 break;
-            case ACTION_SEPARATE:
+            case ACTION_PULLWORD:
+                pullWord(clipedText);
                 break;
             case ACTION_TRANSLATE:
                 translateClipedContent();
@@ -103,8 +107,13 @@ public class WidgetActionBridge extends IntentService {
 
     }
 
-    public void separateClipedContent() {
-
+    public void pullWord(String content) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("pullword://?extra_text=" + URLEncoder.encode(content, "utf-8"))));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void translateClipedContent() {

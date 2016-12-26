@@ -56,4 +56,5 @@ dependencies {
     compile 'com.android.support:support-vector-drawable:24.2.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile project(':pullword_lib')
 }

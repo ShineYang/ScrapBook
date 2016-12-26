@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ScrapBook.iml" filepath="$PROJECT_DIR$/ScrapBook.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pullword_lib/pullword_lib.iml" filepath="$PROJECT_DIR$/pullword_lib/pullword_lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/searchview_lib/searchview_lib.iml" filepath="$PROJECT_DIR$/searchview_lib/searchview_lib.iml" />
     </modules>
   </component>
