@@ -1,5 +1,6 @@
 package com.shineyang.pullword_lib.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class PullWordActivity extends AppCompatActivity implements PullWordLayou
 
     public static final String EXTRA_TEXT = "extra_text";
     private PullWordLayout mLayout;
+    private ProgressDialog dialog;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -52,6 +54,15 @@ public class PullWordActivity extends AppCompatActivity implements PullWordLayou
         });
     }
 
+    public void showDialog() {
+        dialog = ProgressDialog.show(this, "提示", "正在分词...");
+        dialog.show();
+    }
+
+    public void dismissDialog() {
+        dialog.dismiss();
+    }
+
     private void handleIntent(Intent intent) {
         Uri data = intent.getData();
         if (data != null) {
@@ -62,6 +73,8 @@ public class PullWordActivity extends AppCompatActivity implements PullWordLayou
                 return;
             }
 
+            //dialog
+            showDialog();
             SimpleParser parser = PullWord.getSegmentParser();
             parser.parse(text, new HandlerCallback<String[]>() {
                 @Override
@@ -70,6 +83,7 @@ public class PullWordActivity extends AppCompatActivity implements PullWordLayou
                     for (String str : result) {
                         mLayout.addTextItem(str);
                     }
+                    dismissDialog();
                 }
 
                 @Override

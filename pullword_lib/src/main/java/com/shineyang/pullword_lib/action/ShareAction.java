@@ -20,7 +20,7 @@ public class ShareAction implements Action {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(Intent.EXTRA_TEXT, text);
-            context.startActivity(sharingIntent);
+            context.startActivity(Intent.createChooser(sharingIntent, "分享到"));
         }
     }
 }

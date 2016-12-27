@@ -11,21 +11,19 @@ import android.widget.RelativeLayout;
 
 import com.shineyang.scrapbook.R;
 
+import butterknife.BindView;
+
 /**
  * Created by ShineYang on 2016/12/8.
  */
 
 public class EditableToolBar extends LinearLayout {
 
-    private RelativeLayout rl_undo_btn;
-    private RelativeLayout rl_redo_btn;
-    private RelativeLayout rl_separate_btn;
-    private RelativeLayout rl_copy_btn;
-
     private OnUndoClickListener onUndoClickListener = null;
     private OnRedoClickListener onRedoClickListener = null;
-    private OnSeparateClickListener onSeparateClickListener = null;
+    private OnPullWordClickListener onPullWordClickListener = null;
     private OnCopyClickListener onCopyClickListener = null;
+    private OnShareClickListener onShareClickListener =null;
 
     public EditableToolBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,10 +32,11 @@ public class EditableToolBar extends LinearLayout {
     }
 
     public void initEditableToolBarBtn() {
-        rl_undo_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_undo);
-        rl_redo_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_redo);
-        rl_separate_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_separate);
-        rl_copy_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_copy);
+        RelativeLayout rl_undo_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_undo);
+        RelativeLayout rl_redo_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_redo);
+        RelativeLayout rl_pullword_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_pullword);
+        RelativeLayout rl_copy_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_copy);
+        RelativeLayout rl_share_btn = (RelativeLayout) findViewById(R.id.edit_tool_bar_share);
 
         rl_undo_btn.setOnClickListener(new OnClickListener() {
             @Override
@@ -53,10 +52,10 @@ public class EditableToolBar extends LinearLayout {
             }
         });
 
-        rl_separate_btn.setOnClickListener(new OnClickListener() {
+        rl_pullword_btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                onSeparateClickListener.onSeparateClick();
+                onPullWordClickListener.onPullWordClick();
             }
         });
 
@@ -67,12 +66,15 @@ public class EditableToolBar extends LinearLayout {
             }
         });
 
+        rl_share_btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onShareClickListener.onShareClick();
+            }
+        });
+
 
     }
-
-//    public void setOnEditableItemClickListener(OnEditableItemClickListener onEditableItemClickListener) {
-//        this.onEditableItemClickListener = onEditableItemClickListener;
-//    }
 
     public void setOnUndoClickListener(OnUndoClickListener onUndoClickListener) {
         this.onUndoClickListener = onUndoClickListener;
@@ -82,13 +84,18 @@ public class EditableToolBar extends LinearLayout {
         this.onRedoClickListener = onRedoClickListener;
     }
 
-    public void setOnSeparateClickListener(OnSeparateClickListener onSeparateClickListener) {
-        this.onSeparateClickListener = onSeparateClickListener;
+    public void setOnPullWordClickListener(OnPullWordClickListener onPullWordClickListener) {
+        this.onPullWordClickListener = onPullWordClickListener;
     }
 
     public void setOnCopyClickListener(OnCopyClickListener onCopyClickListener) {
         this.onCopyClickListener = onCopyClickListener;
     }
+
+    public void setOnShareClickListener(OnShareClickListener onShareClickListener) {
+        this.onShareClickListener = onShareClickListener;
+    }
+
 
 
     public interface OnUndoClickListener {
@@ -99,12 +106,15 @@ public class EditableToolBar extends LinearLayout {
         void onRedoClick();
     }
 
-    public interface OnSeparateClickListener {
-        void onSeparateClick();
+    public interface OnPullWordClickListener {
+        void onPullWordClick();
     }
 
     public interface OnCopyClickListener {
         void onCopyClick();
     }
 
+    public interface OnShareClickListener {
+        void onShareClick();
+    }
 }

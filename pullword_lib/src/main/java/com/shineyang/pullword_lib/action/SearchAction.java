@@ -25,7 +25,6 @@ public class SearchAction implements Action {
     @Override
     public void start(Context context, String text) {
         if (!TextUtils.isEmpty(text)) {
-
             new FinestWebView.Builder(context)
                     .statusBarColorRes(R.color.colorPrimaryDark)
                     .show(BAIDU_BASE_SEARCH_URL + text);

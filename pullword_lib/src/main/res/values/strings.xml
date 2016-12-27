@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">pullword_lib</string>
     <string name="text_pullword_activity_toolbar">分词模式</string>
+    <string name="text_share_to">分享到</string>
 </resources>

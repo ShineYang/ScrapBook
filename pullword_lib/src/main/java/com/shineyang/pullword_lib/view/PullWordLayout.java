@@ -295,10 +295,6 @@ public class PullWordLayout extends ViewGroup implements BigBangActionBar.Action
         super.onDraw(canvas);
     }
 
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent ev) {
-//        return true;
-//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

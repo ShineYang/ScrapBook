@@ -26,7 +26,7 @@ public class App extends Application {
         if (instance == null) {
             instance = this;
         }
-//设置字体
+            //font
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Euphemia.ttf")
                 .setFontAttrId(R.attr.fontPath)
@@ -46,7 +46,6 @@ public class App extends Application {
     }
 
     public void setUpPullWordAction() {
-
         PullWord.registerAction(PullWord.ACTION_SEARCH, SearchAction.create());
         PullWord.registerAction(PullWord.ACTION_COPY, CopyAction.create());
         PullWord.registerAction(PullWord.ACTION_SHARE, ShareAction.create());

@@ -1,5 +1,7 @@
 package com.shineyang.scrapbook.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,7 +20,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -27,6 +29,7 @@ import com.shineyang.scrapbook.utils.DBUtils;
 import com.shineyang.scrapbook.utils.DateUtils;
 import com.shineyang.scrapbook.utils.EditTextUtil;
 import com.shineyang.scrapbook.view.EditableToolBar;
+import com.shineyang.scrapbook.view.Toaster;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -112,9 +115,9 @@ public class EditorActivity extends AppCompatActivity {
             }
         });
 
-        editableToolBar.setOnSeparateClickListener(new EditableToolBar.OnSeparateClickListener() {
+        editableToolBar.setOnPullWordClickListener(new EditableToolBar.OnPullWordClickListener() {
             @Override
-            public void onSeparateClick() {
+            public void onPullWordClick() {
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("pullword://?extra_text=" + URLEncoder.encode(edt_content.getText().toString(), "utf-8"))));
                 } catch (UnsupportedEncodingException e) {
@@ -126,9 +129,34 @@ public class EditorActivity extends AppCompatActivity {
         editableToolBar.setOnCopyClickListener(new EditableToolBar.OnCopyClickListener() {
             @Override
             public void onCopyClick() {
-
+                copyText();
             }
         });
+
+        editableToolBar.setOnShareClickListener(new EditableToolBar.OnShareClickListener() {
+            @Override
+            public void onShareClick() {
+                shareText();
+            }
+        });
+    }
+
+    public void copyText() {
+        if (!TextUtils.isEmpty(edt_content.getText().toString())) {
+            ClipboardManager service = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            service.setPrimaryClip(ClipData.newPlainText("editor", edt_content.getText().toString()));
+            Toaster.showShortToast(getApplicationContext(), "已复制");
+        }
+    }
+
+    public void shareText() {
+        String text = edt_content.getText().toString();
+        if (!TextUtils.isEmpty(text)) {
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, text);
+            startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.text_share_to)));
+        }
     }
 
     public void getExtraContent() {
@@ -155,10 +183,6 @@ public class EditorActivity extends AppCompatActivity {
         tv_text_count.setText(content.length() + getResources().getString(R.string.text_text));
     }
 
-//    public void changInputKeyBorad() {
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-//    }
 
     public void saveEditedContent() {
         if (isAddMode) {
@@ -192,7 +216,7 @@ public class EditorActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (!isSaved) {
                     saveEditedContent();
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.text_toast_saved), Toast.LENGTH_SHORT).show();
+                    Toaster.showShortToast(getApplicationContext(), R.string.text_toast_saved);
                 } else Log.v("editor", "already save");
 
                 return false;
