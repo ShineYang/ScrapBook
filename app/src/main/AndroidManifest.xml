@@ -4,6 +4,7 @@
     package="com.shineyang.scrapbook">
 
     <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
@@ -55,6 +56,12 @@
 
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.SearchActivity" />
+
+        <service
+            android:name=".service.FloatingWindowService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -62,7 +69,7 @@
             android:theme="@style/FinestWebViewTheme.Light" />
         <activity
             android:name=".activity.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
     </application>
 
 </manifest>

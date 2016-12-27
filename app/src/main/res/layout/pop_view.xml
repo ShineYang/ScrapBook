@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.shineyang.scrapbook.view.ViewContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#77000000">
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:id="@+id/pop_view_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:includeFontPadding="false"
+            android:text="悬浮窗测试"
+            android:textColor="#999"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/pop_view_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:includeFontPadding="false"
+            android:textColor="#000"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</com.shineyang.scrapbook.view.ViewContainer>

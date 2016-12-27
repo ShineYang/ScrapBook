@@ -39,6 +39,7 @@ import com.shineyang.scrapbook.adapter.NaviListAdapter;
 import com.shineyang.scrapbook.bean.AppBean;
 import com.shineyang.scrapbook.bean.ListBean;
 import com.shineyang.scrapbook.service.CBWatcherService;
+import com.shineyang.scrapbook.service.FloatingWindowService;
 import com.shineyang.scrapbook.utils.ActivityAnimUtil;
 import com.shineyang.scrapbook.utils.DBUtils;
 
@@ -104,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
             context.stopService(new Intent(context, CBWatcherService.class));
         } else
             context.startService(new Intent(context, CBWatcherService.class));
+
+        context.startService(new Intent(context, FloatingWindowService.class));
     }
 
     public void initToolBar() {

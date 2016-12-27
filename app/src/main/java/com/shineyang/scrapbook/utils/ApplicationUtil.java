@@ -7,6 +7,7 @@ package com.shineyang.scrapbook.utils;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -134,5 +135,9 @@ public class ApplicationUtil {
         return topPackageName;
     }
 
+
+    public static SharedPreferences getLocalSharedPreferences(Context context) {
+        return context.getSharedPreferences("LocalSharedPreference", Context.MODE_PRIVATE);
+    }
 
 }
