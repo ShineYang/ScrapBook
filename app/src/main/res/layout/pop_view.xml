@@ -5,22 +5,13 @@
     android:background="#77000000">
 
     <LinearLayout
-        android:layout_margin="10dp"
         android:id="@+id/pop_view_content_view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:background="#fff"
         android:orientation="vertical"
         android:padding="15dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:includeFontPadding="false"
-            android:text="悬浮窗测试"
-            android:textColor="#999"
-            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/pop_view_text"
@@ -29,8 +20,150 @@
             android:layout_marginTop="5dp"
             android:gravity="left"
             android:includeFontPadding="false"
+            android:maxLines="3"
             android:textColor="#000"
             android:textSize="14sp" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_widget_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_widget_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_widget_search"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/ic_search_widget_white" />
+
+                <TextView
+                    android:id="@+id/tv_widget_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_widget_search"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="搜索"
+                    android:textColor="@color/grey700"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_widget_pullword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <TextView
+                    style="@android:style/TextAppearance.StatusBar.EventContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_widget_separate"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="分词"
+                    android:textColor="@color/grey700"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/iv_widget_separate"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/ic_seprate_widget_white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_widget_translate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_widget_translate"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/ic_translate_widget_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_widget_translate"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="翻译"
+                    android:textColor="@color/grey700"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_widget_qr_code"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/ic_qrcode_widget_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_widget_qr_code"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="二维码"
+                    android:textColor="@color/grey700"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/iv_widget_share_text"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/ic_share_widget_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_widget_share_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="分享"
+                    android:textColor="@color/grey700"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
     </LinearLayout>
+
 
 </com.shineyang.scrapbook.view.ViewContainer>

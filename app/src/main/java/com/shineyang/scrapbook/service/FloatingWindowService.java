@@ -5,6 +5,7 @@ package com.shineyang.scrapbook.service;
  */
 
 import android.app.Service;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.os.IBinder;
 import android.graphics.PixelFormat;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -195,17 +197,32 @@ public class FloatingWindowService extends Service implements FloatingView.ViewD
 
     }
 
+    public String getClipedText() {
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        CharSequence charSequence = clipboardManager.getPrimaryClip().getItemAt(0).getText();
+        String clipContent = String.valueOf(charSequence);
+        return clipContent;
+    }
+
     public void showFloatingWindow() {
         if (!openedSetting) {
             if (mFloatingView != null) {
                 mFloatingView.updateContent("测试数据");
             } else {
-                mFloatingView = new FloatingView(getApplication(), "测试数据2");
+                mFloatingView = new FloatingView(getApplication(), "刚创建的");
                 mFloatingView.setViewDismissHandler(this);
                 mFloatingView.show();
             }
             //startService(dialogIntent);
         }
+        removeFloatingView();
+    }
+
+    public void removeFloatingView() {
+        if (windowManager != null) {
+            windowManager.removeView(floatingView);
+        }
+        Log.v("floatingView","----------remove view");
     }
 
     @Override
