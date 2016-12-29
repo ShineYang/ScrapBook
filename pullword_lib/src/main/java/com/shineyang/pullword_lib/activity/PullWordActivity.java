@@ -88,6 +88,7 @@ public class PullWordActivity extends AppCompatActivity implements PullWordLayou
 
                 @Override
                 public void onError(Exception e) {
+                    dismissDialog();
                     Toast.makeText(PullWordActivity.this, "分词出错：" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
