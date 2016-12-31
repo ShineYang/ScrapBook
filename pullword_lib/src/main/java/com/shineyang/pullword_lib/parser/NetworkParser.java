@@ -66,7 +66,7 @@ public class NetworkParser extends SimpleParser {
     private Request createRequest(String text) {
         Request request = null;
         try {
-            request = new Request.Builder().get().url("http://shineyang.com/pullword/pullword.php?content=" + URLEncoder.encode(text, "utf-8")).build();
+            request = new Request.Builder().get().url("http://fenci.kitdroid.org:3000/?text=" + URLEncoder.encode(text, "utf-8")).build();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
