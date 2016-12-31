@@ -1,7 +1,7 @@
 ## ScrapBook
 ### Collecting texts everywhere.
 [![Made with Love](https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg)](http://www.shineyang.com)
-[![](https://img.shields.io/badge/notice-developing-yellow.svg)]
+![](https://img.shields.io/badge/notice-developing-yellow.svg)
 
 ![](http://p1.bpimg.com/4851/62c899094529fe29.png)
 
@@ -10,8 +10,7 @@
  I will release v1.0 latter.
 
 ## Screenshots
-TODO
-
+![](http://p1.bpimg.com/4851/754d9851aa6c5567.jpg)
 ## Features
 
 #### Clipboard
