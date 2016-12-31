@@ -2,7 +2,7 @@
 ### Collecting texts everywhere.
 [![Made with Love](https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg)](http://www.shineyang.com)
 
-![](https://ww2.sinaimg.cn/large/006tNc79jw1fb9zxgosoaj30wu0k1dkx.jpg)
+![](https://ww4.sinaimg.cn/large/006tNc79jw1fba0cceoumj30wm0j6wjd.jpg)
 ## Notice
  Now the app is under development, so there's many bugs, and can't be used normally.
  I will release v1.0 latter.
