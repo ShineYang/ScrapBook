@@ -1,6 +1,6 @@
 ## ScrapBook
 [![Made with Love](https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg)](http://www.shineyang.com)
-
+![PREVIEW](https://ww2.sinaimg.cn/large/006tNc79jw1fb9zxgosoaj30wu0k1dkx.jpg)
 ### Collecting texts everywhere.
 
 ## Notice
