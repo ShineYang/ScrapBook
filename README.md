@@ -1,7 +1,7 @@
 ## ScrapBook
 ### Collecting texts everywhere.
 [![Made with Love](https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg)](http://www.shineyang.com)
-[!https://img.shields.io/badge/notice-developing-yellow.svg]
+[![](https://img.shields.io/badge/notice-developing-yellow.svg)]
 
 ![](http://p1.bpimg.com/4851/62c899094529fe29.png)
 
