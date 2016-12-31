@@ -2,7 +2,7 @@
 ### Collecting texts everywhere.
 [![Made with Love](https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg)](http://www.shineyang.com)
 
-![PREVIEW]http://shineyang.com/wordpress/wp-content/uploads/2016/12/scrapbook_poster.png)
+![PREVIEW](http://shineyang.com/wordpress/wp-content/uploads/2016/12/scrapbook_poster.png)
 
 ## Notice
  Now the app is under development, so there's many bugs, and can't be used normally.
