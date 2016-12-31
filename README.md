@@ -1,7 +1,8 @@
 ## ScrapBook
-[![Made with Love](https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg)](http://www.shineyang.com)
-![PREVIEW](https://ww2.sinaimg.cn/large/006tNc79jw1fb9zxgosoaj30wu0k1dkx.jpg)
 ### Collecting texts everywhere.
+[![Made with Love](https://img.shields.io/badge/made%20with-%e2%9d%a4-ff69b4.svg)](http://www.shineyang.com)
+
+![PREVIEW]http://shineyang.com/wordpress/wp-content/uploads/2016/12/scrapbook_poster.png)
 
 ## Notice
  Now the app is under development, so there's many bugs, and can't be used normally.
