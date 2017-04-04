@@ -7,7 +7,7 @@ import android.widget.RemoteViews;
 
 import com.shineyang.scrapbook.R;
 import com.shineyang.scrapbook.action.WidgetActionBridge;
-import com.shineyang.scrapbook.bean.ListBean;
+import com.shineyang.scrapbook.bean.ContentBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,11 @@ import java.util.UUID;
 
 public class NotificationWidgetAdapter {
     private RemoteViews expandedView;
-    private List<ListBean> clipsList;
+    private List<ContentBean> clipsList;
     private Context context;
 
 
-    public NotificationWidgetAdapter(Context context, String clipedText) {//, ListBean clipObject
+    public NotificationWidgetAdapter(Context context, String clipedText) {//, ContentBean clipObject
         this.context = context;
         clipsList = new ArrayList<>();
         expandedView = new RemoteViews(this.context.getPackageName(), R.layout.layout_notification_widget);
@@ -32,6 +32,7 @@ public class NotificationWidgetAdapter {
         Intent openSearchIntent = new Intent(this.context, WidgetActionBridge.class)
                 .putExtra(Intent.EXTRA_TEXT, clipedText)
                 .putExtra(WidgetActionBridge.ACTION_CODE, WidgetActionBridge.ACTION_SEARCH);
+
         PendingIntent pOpenShareIntent = PendingIntent.getService(this.context,
                 UUID.randomUUID().hashCode(),
                 openSearchIntent,

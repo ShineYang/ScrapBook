@@ -85,13 +85,31 @@
 
             <include layout="@layout/navigation_drawer_header" />
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="7dp"
-                android:text="标签"
-                android:textColor="@color/grey500" />
+                android:layout_height="30dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/text_navigation_tag"
+                    android:textColor="@color/grey500" />
+
+                <ImageView
+                    android:id="@+id/iv_add_tag"
+                    android:clickable="true"
+                    android:layout_width="20dp"
+                    android:background="@drawable/edit_toolbar_bg"
+                    android:layout_marginRight="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@mipmap/ic_add_tag"
+                    android:layout_height="20dp"
+                    android:padding="4dp"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
 
             <ListView
                 android:id="@+id/drawer_list"

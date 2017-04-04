@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by ShineYang on 2016/11/4.
  */
 @Entity
-public class ListBean {
+public class ContentBean {
     @Id
     private Long id;
     private String content;
@@ -19,27 +19,28 @@ public class ListBean {
     private String isCollect;
     private boolean isSelect = false;
 
-//    public ListBean(String content, String from, String date, String isCollect) {
+//    public ContentBean(String content, String from, String date, String isCollect) {
 //        this.content = content;
 //        this.from = from;
 //        this.date = date;
 //        this.isCollect = isCollect;
 //    }
 
-    public ListBean(String content, String from, String date) {
+    public ContentBean(String content, String from, String date) {
         this.content = content;
         this.from = from;
         this.date = date;
         this.isCollect = "0";
     }
 
-    public ListBean() {
+
+    public ContentBean() {
     }
 
 
-    @Generated(hash = 178273669)
-    public ListBean(Long id, String content, String from, String date,
-                    String isCollect, boolean isSelect) {
+    @Generated(hash = 1701810223)
+    public ContentBean(Long id, String content, String from, String date, String isCollect,
+            boolean isSelect) {
         this.id = id;
         this.content = content;
         this.from = from;
@@ -47,6 +48,8 @@ public class ListBean {
         this.isCollect = isCollect;
         this.isSelect = isSelect;
     }
+
+
 
     @Override
     public String toString() {

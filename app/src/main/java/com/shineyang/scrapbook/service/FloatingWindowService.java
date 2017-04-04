@@ -99,6 +99,7 @@ public class FloatingWindowService extends Service implements FloatingView.ViewD
     public void onCreate() {
 
         super.onCreate();
+        Log.v("android","------------555555");
         if (checkPermission()) {
             onStartCommandReturn = START_STICKY;
         } else {
@@ -123,6 +124,7 @@ public class FloatingWindowService extends Service implements FloatingView.ViewD
         //权限判断
         if (Build.VERSION.SDK_INT >= 23) {
             if (!Settings.canDrawOverlays(getApplicationContext())) {
+                Log.v("android","------------555555");
                 //启动Activity让用户授权
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                 startActivity(intent);

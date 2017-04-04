@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -130,6 +131,8 @@ public class WidgetActionBridge extends IntentService {
     }
 
     public void searchWithWebView(String keyWords) {
+        Log.v("copyed", "------copyed text:" + keyWords);
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String BASE_URL = preferences.getString(PREF_SELECT_SEARCH_ENGINE, "");
         switch (BASE_URL) {
@@ -143,9 +146,12 @@ public class WidgetActionBridge extends IntentService {
                 BASE_SEARCH_URL = BING_BASE_SEARCH_URL;
                 break;
         }
-        new FinestWebView.Builder(this)
-                .statusBarColorRes(R.color.colorPrimaryDark)
-                .show(BASE_SEARCH_URL + keyWords);
+        if (!TextUtils.isEmpty(keyWords)) {
+            new FinestWebView.Builder(this)
+                    .statusBarColorRes(R.color.colorPrimaryDark)
+                    .show(BASE_SEARCH_URL + keyWords);
+        }
+
     }
 
     private void createTranslateWindow() {
@@ -166,4 +172,25 @@ public class WidgetActionBridge extends IntentService {
         mWindowManager.addView(root_layout, wmParams);
     }
 
+    /**
+     * 收起通知栏
+     *
+     * @param context
+     */
+    public static void collapseStatusBar(Context context) {
+        try {
+            Object statusBarManager = context.getSystemService(Context.USAGE_STATS_SERVICE);
+            Method collapse;
+
+            if (Build.VERSION.SDK_INT <= 16) {
+                collapse = statusBarManager.getClass().getMethod("collapse");
+            } else {
+                collapse = statusBarManager.getClass().getMethod("collapsePanels");
+            }
+            collapse.invoke(statusBarManager);
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+
+    }
 }

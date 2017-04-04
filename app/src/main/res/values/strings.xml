@@ -24,6 +24,7 @@
     <string name="text_toolbar_permission">开启权限</string>
     <string name="title_activity_settings">Settings</string>
     <string name="text_share_to">分享到</string>
+    <string name="text_navigation_tag">标签</string>
 
     <!-- Strings related to Settings -->
 

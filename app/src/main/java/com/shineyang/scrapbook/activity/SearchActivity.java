@@ -12,8 +12,7 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.shineyang.scrapbook.R;
-import com.shineyang.scrapbook.adapter.SearchResultListAdapter;
-import com.shineyang.scrapbook.bean.ListBean;
+import com.shineyang.scrapbook.bean.ContentBean;
 import com.shineyang.scrapbook.bean.SuggestionListBean;
 import com.shineyang.scrapbook.utils.DBUtils;
 
@@ -37,7 +36,12 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
+        setSearchFocused();
         initSearchView();
+    }
+    public void setSearchFocused(){
+        rl_search_tips.setVisibility(View.INVISIBLE);
+        floatingSearchView.setSearchFocusedInternal(true);
     }
 
     public void initSearchView() {
@@ -70,7 +74,7 @@ public class SearchActivity extends AppCompatActivity {
                     floatingSearchView.clearSuggestions();
                 } else {
                     //floatingSearchView.showProgress();
-                    List<ListBean> listRes;
+                    List<ContentBean> listRes;
                     listRes = DBUtils.queryItem(newQuery);
                     querySuggestions = new ArrayList<>();
                     for (int i = 0; i < listRes.size(); i++) {

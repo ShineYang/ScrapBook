@@ -37,9 +37,8 @@ import com.shineyang.scrapbook.R;
 import com.shineyang.scrapbook.adapter.MainContentRVAdapter;
 import com.shineyang.scrapbook.adapter.NaviListAdapter;
 import com.shineyang.scrapbook.bean.AppBean;
-import com.shineyang.scrapbook.bean.ListBean;
+import com.shineyang.scrapbook.bean.ContentBean;
 import com.shineyang.scrapbook.service.CBWatcherService;
-import com.shineyang.scrapbook.service.FloatingWindowService;
 import com.shineyang.scrapbook.utils.ActivityAnimUtil;
 import com.shineyang.scrapbook.utils.DBUtils;
 
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle mActionBarDrawerToggle;
 
-    private List<ListBean> listData;
+    private List<ContentBean> listData;
 
     private NaviListAdapter naviListAdapter;
 
@@ -106,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
         } else
             context.startService(new Intent(context, CBWatcherService.class));
 
-        context.startService(new Intent(context, FloatingWindowService.class));
+        //context.startService(new Intent(context, FloatingWindowService.class));
+        Log.v("floating","----------start");
     }
 
     public void initToolBar() {
@@ -183,14 +183,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadDataByAppName(final String appName) {
-        List<ListBean> newListBeen = DBUtils.getBeanListByAppName(appName);
+        List<ContentBean> newListBeen = DBUtils.getBeanListByAppName(appName);
         rv_main_content.removeAllViews();
         mainContentRVAdapter.readListData(newListBeen);
         rv_main_content.setAdapter(mainContentRVAdapter);
     }
 
     public void loadFavoriate() {
-        List<ListBean> favoriteListBeen;
+        List<ContentBean> favoriteListBeen;
         if (DBUtils.readFavoriteList().size() != 0) {
             favoriteListBeen = DBUtils.readFavoriteList();
             rv_main_content.removeAllViews();
@@ -221,12 +221,12 @@ public class MainActivity extends AppCompatActivity {
 
             mainContentRVAdapter.setOnItemClickListener(new MainContentRVAdapter.OnRCVItemClickListener() {
                 @Override
-                public void onItemClick(View view, int position, ListBean listBean) {
+                public void onItemClick(View view, int position, ContentBean contentBean) {
                     Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                    intent.putExtra("list_id", String.valueOf(listBean.getId()))
-                            .putExtra("list_content", listBean.getContent())
-                            .putExtra("list_from", listBean.getFrom())
-                            .putExtra("list_date", listBean.getDate());
+                    intent.putExtra("list_id", String.valueOf(contentBean.getId()))
+                            .putExtra("list_content", contentBean.getContent())
+                            .putExtra("list_from", contentBean.getFrom())
+                            .putExtra("list_date", contentBean.getDate());
                     startActivity(intent);
                 }
 
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public List<ListBean> readListContent() {
+    public List<ContentBean> readListContent() {
         listData = new ArrayList<>();
         listData = DBUtils.readAllList();
         return listData;

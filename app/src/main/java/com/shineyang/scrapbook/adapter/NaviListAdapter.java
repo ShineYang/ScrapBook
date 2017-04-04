@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.shineyang.scrapbook.R;
 import com.shineyang.scrapbook.bean.AppBean;
-import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.utils.DBUtils;
 
 import java.util.ArrayList;
@@ -152,7 +151,7 @@ public class NaviListAdapter extends BaseAdapter {
 
     private int getFavoriateListCount() {
         int count;
-        count = DBUtils.getFavoriateListCount();
+        count = DBUtils.getCollectedListCount();
         return count;
     }
 

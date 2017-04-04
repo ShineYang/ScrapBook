@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.shineyang.scrapbook.R;
-import com.shineyang.scrapbook.bean.ListBean;
+import com.shineyang.scrapbook.bean.ContentBean;
 import com.shineyang.scrapbook.utils.DBUtils;
 import com.shineyang.scrapbook.utils.DateUtils;
 import com.shineyang.scrapbook.utils.EditTextUtil;
@@ -33,6 +33,7 @@ import com.shineyang.scrapbook.view.Toaster;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -159,13 +160,18 @@ public class EditorActivity extends AppCompatActivity {
         }
     }
 
+    public List<ContentBean> getBeanById(String id) {
+        return DBUtils.getContentBeanById(id);
+    }
+
     public void getExtraContent() {
         Intent intent = getIntent();
+        id = intent.getStringExtra("list_id");
+        ContentBean contentBean = getBeanById(id).get(0);
         if (intent.hasExtra("list_content")) {
-            id = intent.getStringExtra("list_id");
-            content = intent.getStringExtra("list_content");
-            from = intent.getStringExtra("list_from");
-            date = intent.getStringExtra("list_date");
+            content = contentBean.getContent();
+            from = contentBean.getFrom();
+            date = contentBean.getDate();
             setContentInfo();
         } else if (intent.getBooleanExtra("addMode", true)) {
             isAddMode = true;
@@ -188,7 +194,7 @@ public class EditorActivity extends AppCompatActivity {
         if (isAddMode) {
             String date = DateUtils.getCurDateAndTime();
             String from = getResources().getString(R.string.app_name);
-            ListBean bean = new ListBean(edt_content.getText().toString(), from, date);
+            ContentBean bean = new ContentBean(edt_content.getText().toString(), from, date);
             DBUtils.addItem(bean);
             isSaved = true;
             changeSaveIcon();

@@ -15,8 +15,7 @@
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@mipmap/ic_qq" />
+            android:layout_marginLeft="15dp" />
 
         <TextView
             android:id="@+id/tv_navi_app_name"
@@ -25,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/iv_navi_app_icon"
-            android:text="QQ"
+            android:text=""
             android:textSize="15sp" />
 
         <TextView

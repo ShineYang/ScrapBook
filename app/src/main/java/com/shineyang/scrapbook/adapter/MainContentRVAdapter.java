@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.shineyang.scrapbook.R;
-import com.shineyang.scrapbook.activity.MainActivity;
-import com.shineyang.scrapbook.bean.AppBean;
-import com.shineyang.scrapbook.bean.ListBean;
+import com.shineyang.scrapbook.bean.ContentBean;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +23,7 @@ public class MainContentRVAdapter extends RecyclerView.Adapter<MainContentRVView
     private static final int TYPE_FOOTER = 1;  //说明是带有Footer的
     private static final int TYPE_NORMAL = 2;  //说明是不带有header和footer的
     private Context context;
-    public List<ListBean> listDatas;
+    public List<ContentBean> listDatas;
 
     private View mHeaderView;
     private View mFooterView;
@@ -55,19 +53,19 @@ public class MainContentRVAdapter extends RecyclerView.Adapter<MainContentRVView
         notifyItemInserted(getItemCount() - 1);
     }
 
-    public void readListData(List<ListBean> listBeanList) {
+    public void readListData(List<ContentBean> listBeanContent) {
         listDatas = new ArrayList<>();
-        Collections.reverse(listBeanList);
-        listDatas = listBeanList;
+        Collections.reverse(listBeanContent);
+        listDatas = listBeanContent;
     }
 
-    public void addData(int postion, ListBean listBean) {
+    public void addData(int postion, ContentBean contentBean) {
         //position为添加item的位置
-        listDatas.add(postion, listBean);
+        listDatas.add(postion, contentBean);
         notifyItemInserted(postion);
     }
 
-    public void removeData(int position, ListBean listBean) {
+    public void removeData(int position, ContentBean contentBean) {
 
     }
 
@@ -156,7 +154,7 @@ public class MainContentRVAdapter extends RecyclerView.Adapter<MainContentRVView
 
     public interface OnRCVItemClickListener {
 
-        void onItemClick(View view, int position, ListBean listBean);
+        void onItemClick(View view, int position, ContentBean contentBean);
 
         void onItemLikeClick(ImageView iv_favorite, int position);
     }

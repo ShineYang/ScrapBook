@@ -1,7 +1,6 @@
 package com.shineyang.scrapbook.service;
 
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -15,22 +14,18 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.shineyang.scrapbook.R;
 import com.shineyang.scrapbook.adapter.NotificationWidgetAdapter;
 import com.shineyang.scrapbook.bean.AppBean;
-import com.shineyang.scrapbook.bean.ListBean;
+import com.shineyang.scrapbook.bean.ContentBean;
 import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.greendao.gen.AppBeanDao;
-import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
+import com.shineyang.scrapbook.greendao.gen.ContentBeanDao;
 import com.shineyang.scrapbook.utils.ApplicationUtil;
-import com.shineyang.scrapbook.utils.DBUtils;
 import com.shineyang.scrapbook.utils.DateUtils;
-import com.thefinestartist.finestwebview.FinestWebView;
 
 
 /**
@@ -99,7 +94,7 @@ public class CBWatcherService extends Service {
         Log.v("cbservice", "-------performClipboardCheck");
         if (temporaryStop) return;
         if (!clipboardManager.hasPrimaryClip()) return;
-        ListBean listBean;
+        ContentBean contentBean;
         try {
             //Don't use CharSequence .toString()!
             CharSequence charSequence = clipboardManager.getPrimaryClip().getItemAt(0).getText();
@@ -117,7 +112,7 @@ public class CBWatcherService extends Service {
             Log.v("cbservice", "-------过滤掉来自本应用的复制动作");
         } else {
             date = DateUtils.getCurDateAndTime();//复制时间
-            listBean = new ListBean(clipContent, appName, date);
+            contentBean = new ContentBean(clipContent, appName, date);
             appBean = new AppBean(appName, packageName, Environment.getExternalStorageDirectory() + "/com.shineyang.scrapbook/" + packageName + ".png");
             appBeanDao = GreenDaoManager.getInstance().getSession().getAppBeanDao();
 
@@ -128,8 +123,8 @@ public class CBWatcherService extends Service {
                 appBeanDao.insert(appBean);
             }
 
-            ListBeanDao listBeanDao = GreenDaoManager.getInstance().getSession().getListBeanDao();
-            listBeanDao.insert(listBean);
+            ContentBeanDao contentBeanDao = GreenDaoManager.getInstance().getSession().getContentBeanDao();
+            contentBeanDao.insert(contentBean);
         }
 
     }
@@ -151,7 +146,7 @@ public class CBWatcherService extends Service {
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET)
                 .setOngoing(false)
                 .setAutoCancel(false)
-                .setContentText("下滑展开更多选项")
+                .setContentText("点击或下滑展开更多选项")
                 .setGroup(NOTIFICATION_GROUP)
                 .setGroupSummary(true);
 

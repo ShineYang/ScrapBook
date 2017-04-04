@@ -1,15 +1,10 @@
 package com.shineyang.scrapbook.utils;
 
-import android.util.Log;
-
 import com.shineyang.scrapbook.bean.AppBean;
-import com.shineyang.scrapbook.bean.ListBean;
+import com.shineyang.scrapbook.bean.ContentBean;
 import com.shineyang.scrapbook.greendao.GreenDaoManager;
 import com.shineyang.scrapbook.greendao.gen.AppBeanDao;
-import com.shineyang.scrapbook.greendao.gen.ListBeanDao;
-
-import org.greenrobot.greendao.query.Query;
-import org.greenrobot.greendao.query.WhereCondition;
+import com.shineyang.scrapbook.greendao.gen.ContentBeanDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,45 +15,52 @@ import java.util.List;
 
 public class DBUtils {
 
-    private static ListBeanDao getListBeanDao() {
-        return GreenDaoManager.getInstance().getSession().getListBeanDao();
+    private static ContentBeanDao getContentBeanDao() {
+        return GreenDaoManager.getInstance().getSession().getContentBeanDao();
     }
 
     private static AppBeanDao getAppBeanDao() {
         return GreenDaoManager.getInstance().getSession().getAppBeanDao();
     }
 
-    public static void addItem(ListBean newContent) {
-        GreenDaoManager.getInstance().getSession().getListBeanDao().insert(newContent);
+    public static void addItem(ContentBean newContent) {
+        GreenDaoManager.getInstance().getSession().getContentBeanDao().insert(newContent);
     }
 
     public static void deleteItem() {
 
     }
 
-    public static List<ListBean> getBeanListByAppName(String appName) {
-        List<ListBean> list;
-        list = getListBeanDao().queryBuilder().where(
-                ListBeanDao.Properties.From.eq(appName)
+    public static List<ContentBean> getContentBeanById(String id){
+        List<ContentBean> bean = getContentBeanDao().queryBuilder().where(
+                ContentBeanDao.Properties.Id.eq(id)
+        ).build().list();
+        return bean;
+    }
+
+    public static List<ContentBean> getBeanListByAppName(String appName) {
+        List<ContentBean> list;
+        list = getContentBeanDao().queryBuilder().where(
+                ContentBeanDao.Properties.From.eq(appName)
         ).list();
         return list;
     }
 
     public static String readAppCopyedCount(String appName) {
         int count;
-        count = getListBeanDao().queryBuilder()
-                .where(ListBeanDao.Properties.From.eq(appName))
+        count = getContentBeanDao().queryBuilder()
+                .where(ContentBeanDao.Properties.From.eq(appName))
                 .build().list().size();
         return String.valueOf(count);
     }
 
     public static Boolean isfavoriteItem(String id) {
         Boolean isfavoriteItem = false;
-        ListBeanDao listBeanDao = getListBeanDao();
-        List<ListBean> list = listBeanDao.queryBuilder().where(
-                ListBeanDao.Properties.Id.eq(id)
+        ContentBeanDao listBeanDao = getContentBeanDao();
+        List<ContentBean> list = listBeanDao.queryBuilder().where(
+                ContentBeanDao.Properties.Id.eq(id)
         ).build().list();
-        for (ListBean bean : list) {
+        for (ContentBean bean : list) {
             if (bean.getIsCollect().equals("0")) {
                 isfavoriteItem = false;
             } else {
@@ -70,12 +72,12 @@ public class DBUtils {
     }
 
     public static void starItem(String id) {
-        ListBeanDao listBeanDao = getListBeanDao();
-        List<ListBean> list = listBeanDao.queryBuilder().where(
-                ListBeanDao.Properties.Id.eq(id)
+        ContentBeanDao listBeanDao = getContentBeanDao();
+        List<ContentBean> list = listBeanDao.queryBuilder().where(
+                ContentBeanDao.Properties.Id.eq(id)
         ).build().list();
 
-        for (ListBean bean : list) {
+        for (ContentBean bean : list) {
             if (bean.getIsCollect().equals("0")) {
                 bean.setIsCollect("1");
             } else {
@@ -92,56 +94,56 @@ public class DBUtils {
         return naviList;
     }
 
-    public static List<ListBean> readAllList() {
-        List<ListBean> allList;
-        allList = getListBeanDao().queryBuilder().list();
+    public static List<ContentBean> readAllList() {
+        List<ContentBean> allList;
+        allList = getContentBeanDao().queryBuilder().list();
         return allList;
     }
 
-    public static List<ListBean> readFavoriteList() {
-        List<ListBean> favoriteList;
-        favoriteList = getListBeanDao().queryBuilder().where(
-                ListBeanDao.Properties.IsCollect.eq("1")
+    public static List<ContentBean> readFavoriteList() {
+        List<ContentBean> favoriteList;
+        favoriteList = getContentBeanDao().queryBuilder().where(
+                ContentBeanDao.Properties.IsCollect.eq("1")
         ).list();
         return favoriteList;
     }
 
     public static int getAllListCount() {
         int count;
-        count = getListBeanDao().queryBuilder()
+        count = getContentBeanDao().queryBuilder()
                 .list().size();
         return count;
     }
 
-    public static int getFavoriateListCount() {
+    public static int getCollectedListCount() {
         int count;
-        count = getListBeanDao().queryBuilder().where(
-                ListBeanDao.Properties.IsCollect.eq("1")
+        count = getContentBeanDao().queryBuilder().where(
+                ContentBeanDao.Properties.IsCollect.eq("1")
         ).list().size();
         return count;
     }
 
-    public static List<ListBean> queryItem(String searchContent) {//search
-        List<ListBean> searchResult;
-        searchResult = getListBeanDao().queryBuilder()
-                .where(ListBeanDao.Properties.Content.like("%" + searchContent + "%"))
+    public static List<ContentBean> queryItem(String searchContent) {//search
+        List<ContentBean> searchResult;
+        searchResult = getContentBeanDao().queryBuilder()
+                .where(ContentBeanDao.Properties.Content.like("%" + searchContent + "%"))
                 .build().list();
         return searchResult;
     }
 
-    public static List<ListBean> readTop10ListBean() {
-        List<ListBean> listData = new ArrayList<>();
-        listData = getListBeanDao().queryBuilder()
+    public static List<ContentBean> readTop10ListBean() {
+        List<ContentBean> listData = new ArrayList<>();
+        listData = getContentBeanDao().queryBuilder()
                 .limit(10).list();
         return listData;
     }
 
     public static void saveEditedContent(String id, String newContent) {//save
-        ListBeanDao listBeanDao = getListBeanDao();
-        List<ListBean> list = listBeanDao.queryBuilder().where(
-                ListBeanDao.Properties.Id.eq(id)
+        ContentBeanDao listBeanDao = getContentBeanDao();
+        List<ContentBean> list = listBeanDao.queryBuilder().where(
+                ContentBeanDao.Properties.Id.eq(id)
         ).build().list();
-        for (ListBean bean : list) {
+        for (ContentBean bean : list) {
             bean.setContent(newContent);
             listBeanDao.insertOrReplaceInTx(bean);
         }
